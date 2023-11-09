@@ -11,6 +11,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Add CORS support, first here as a DI service:
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowToDoClients", policy => {
+        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,6 +32,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// and finally say that we are using CORS here specifying the CORS policy by name:
+app.UseCors("AllowToDoClients");
 
 app.UseAuthorization();
 
