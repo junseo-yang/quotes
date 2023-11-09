@@ -14,7 +14,14 @@
             headers: {
                 'Accept': 'application/json'
             }
-        });
+        }).catch(function () {
+            _quotesList.empty();
+            _quotesListMessage.text('Hmmm, there was a problem loading the quotes. Check the API server.');
+            _quotesListMessage.attr('class', 'alert alert-danger');
+            _quotesListMessage.show()
+            _quotesListMessage.fadeOut(3000);
+        }
+        );
 
         if (resp.status === 200) {
             let quotesResult = await resp.json();
@@ -33,7 +40,6 @@
 
                     _quotesList.empty();
                     for (let i = 0; i < quotes.length; i++) {
-                        console.log(quotes[i])
                         _quotesList.append(`
                         <div class="card" style="width: 18rem;">
                           <div class="card-body">
@@ -60,8 +66,9 @@
             }
 
         } else {
-            _quotesListMessage.text('Hmmm, there was a problem loading the tasks');
-            _quotesListMessage.attr('class', 'text-danger');
+            _quotesListMessage.text('Hmmm, there was a problem loading the quotes. Check the API server.');
+            _quotesListMessage.attr('class', 'alert alert-danger');
+            _quotesListMessage.show()
             _quotesListMessage.fadeOut(3000);
         }
     };
