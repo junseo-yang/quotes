@@ -5,7 +5,12 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuotesWebAPI", "QuotesWebAPI\QuotesWebAPI.csproj", "{D803FF13-2198-4A4E-8190-1D41A1CA04AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuotesWebSPAClient", "QuotesWebSPAClient\QuotesWebSPAClient.csproj", "{624B48E0-2030-4F48-8852-C5C26C9B7747}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuotesWebSPAClient", "QuotesWebSPAClient\QuotesWebSPAClient.csproj", "{624B48E0-2030-4F48-8852-C5C26C9B7747}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PythonClient", "PythonClient", "{3183A774-DE5D-4782-BBF4-2C4F00E37A62}"
+	ProjectSection(SolutionItems) = preProject
+		PythonClient\quotes_python_client.py = PythonClient\quotes_python_client.py
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

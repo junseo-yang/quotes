@@ -7,7 +7,7 @@ namespace QuotesWebAPI.Controllers
     {
         public string? Description { get; set; }
 
-        public string Author { get; set; } = "Anonymous";
+        public string? Author { get; set; }
 
         public int Like { get; set; } = 0;
 
