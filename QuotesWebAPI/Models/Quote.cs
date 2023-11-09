@@ -17,6 +17,8 @@ namespace QuotesWebAPI.Models
         [Range(0, int.MaxValue, ErrorMessage = "Likes should be greater than or equal to 9.")]
         public int Like { get; set; } = 0;
 
+        public DateTime? LastModified { get; set; } = DateTime.Now;
+
         public IList<TagAssignment>? TagAssignments { get; set; }
     }
 }

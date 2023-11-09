@@ -9,6 +9,8 @@ namespace QuotesWebAPI.Models
         [Required]
         public string? Name { get; set; }
 
+        public DateTime? LastModified { get; set; } = DateTime.Now;
+
         public IList<TagAssignment>? TagAssignments { get; set; }
     }
 }

@@ -23,26 +23,53 @@ namespace QuotesWebAPI.Controllers
         [HttpGet]
         public IActionResult GetQuotes()
         {
-            var quotes = _context.Quotes.ToList();
+            var tags = _context.Tags.Select(t => t.Name).ToList();
+            //var quotes = _context.Quotes.ToList();
 
-            List<QuoteViewModel> quoteViewModels = new List<QuoteViewModel>();
-
-            foreach (var quote in quotes)
+            List<QuoteInfo> quotes = _context.Quotes.
+                                        Include(q => q.TagAssignments)
+                                        .ThenInclude(q => q.Tag)
+                                        .Select(q => new QuoteInfo()
+                                        {
+                                            QuoteId = q.QuoteId,
+                                            Description = q.Description,
+                                            Author = q.Author,
+                                            Tags = _context.TagAssignments.Include(ta => ta.Tag)
+                                                        .Where(ta => ta.QuoteId == q.QuoteId)
+                                                        .Select(ta => ta.Tag.Name)
+                                                        .ToList()
+                                        }).ToList();
+            
+            DateTime quoteLastModified = new DateTime(1970, 1, 1);
+            if (quotes.Count > 0)
             {
-                quoteViewModels.Add(new QuoteViewModel
-                {
-                    QuoteId = quote.QuoteId,
-                    Description = quote.Description,
-                    Author = quote.Author,
-                    Like = quote.Like,
-                    Tags = _context.TagAssignments.Include(ta => ta.Tag)
-                            .Where(ta => ta.QuoteId == quote.QuoteId)
-                            .Select(ta => ta.Tag.Name)
-                            .ToList()
-                });
+                quoteLastModified = _context.Quotes.Max(t => t.LastModified).GetValueOrDefault();
             }
 
-            return Ok(quoteViewModels);
+            QuoteViewModel quoteViewModel = new QuoteViewModel()
+            {
+                Quotes = quotes,
+                QuotesLastModified = quoteLastModified,
+                Tags = tags
+            };
+
+            //foreach (var quote in quotes)
+            //{
+            //    quoteViewModels.Add(new QuoteViewModel
+            //    {
+            //        QuoteId = quote.QuoteId,
+            //        Description = quote.Description,
+            //        Author = quote.Author,
+            //        Like = quote.Like,
+            //        Tags = _context.TagAssignments.Include(ta => ta.Tag)
+            //                .Where(ta => ta.QuoteId == quote.QuoteId)
+            //                .Select(ta => ta.Tag.Name)
+            //                .ToList()
+            //    });
+            //}
+
+
+            return Ok(quoteViewModel);
         }
 
         // GET: api/QuotesApi/5

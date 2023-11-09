@@ -1,14 +1,12 @@
-﻿namespace QuotesWebAPI.Models
+﻿using QuotesWebAPI.Controllers;
+
+namespace QuotesWebAPI.Models
 {
     public class QuoteViewModel
     {
-        public int? QuoteId { get; set; }
+        public List<QuoteInfo>? Quotes { get; set; }
 
-        public string? Description { get; set; }
-
-        public string? Author { get; set; }
-
-        public int? Like { get; set; } = 0;
+        public DateTime? QuotesLastModified { get; set; }
 
         public List<string>? Tags { get; set; }
     }

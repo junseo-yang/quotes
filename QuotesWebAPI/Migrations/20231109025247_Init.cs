@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -20,7 +21,8 @@ namespace QuotesWebAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Author = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Like = table.Column<int>(type: "int", nullable: false)
+                    Like = table.Column<int>(type: "int", nullable: false),
+                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -33,7 +35,8 @@ namespace QuotesWebAPI.Migrations
                 {
                     TagId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -66,30 +69,30 @@ namespace QuotesWebAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "Quotes",
-                columns: new[] { "QuoteId", "Author", "Description", "Like" },
+                columns: new[] { "QuoteId", "Author", "Description", "LastModified", "Like" },
                 values: new object[,]
                 {
-                    { 1, "Mark Twain", "Good friends, good books, and a sleepy conscience: this is the ideal life.", 3 },
-                    { 2, "Pearl S. Buck", "Many people lose the small joys in the hope for the big happiness.", 4 },
-                    { 3, "Leo Tolstoy", "A quiet secluded life in the country, with the possibility of being useful to people to whom it is easy to do good, and who are not accustomed to have it done to them; then work which one hopes may be of some use; then rest, nature, books, music, love for one's neighbor — such is my idea of happiness.", 5 }
+                    { 1, "Mark Twain", "Good friends, good books, and a sleepy conscience: this is the ideal life.", new DateTime(2023, 11, 8, 21, 52, 47, 165, DateTimeKind.Local).AddTicks(2099), 3 },
+                    { 2, "Pearl S. Buck", "Many people lose the small joys in the hope for the big happiness.", new DateTime(2023, 11, 8, 21, 52, 47, 165, DateTimeKind.Local).AddTicks(2103), 4 },
+                    { 3, "Leo Tolstoy", "A quiet secluded life in the country, with the possibility of being useful to people to whom it is easy to do good, and who are not accustomed to have it done to them; then work which one hopes may be of some use; then rest, nature, books, music, love for one's neighbor — such is my idea of happiness.", new DateTime(2023, 11, 8, 21, 52, 47, 165, DateTimeKind.Local).AddTicks(2107), 5 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Tags",
-                columns: new[] { "TagId", "Name" },
+                columns: new[] { "TagId", "LastModified", "Name" },
                 values: new object[,]
                 {
-                    { 1, "books" },
-                    { 2, "contentment" },
-                    { 3, "friends" },
-                    { 4, "friendship" },
-                    { 5, "life" },
-                    { 6, "conduct-of-life" },
-                    { 7, "country" },
-                    { 8, "happniess" },
-                    { 9, "music" },
-                    { 10, "nature" },
-                    { 11, "work" }
+                    { 1, new DateTime(2023, 11, 8, 21, 52, 47, 165, DateTimeKind.Local).AddTicks(2265), "books" },
+                    { 2, new DateTime(2023, 11, 8, 21, 52, 47, 165, DateTimeKind.Local).AddTicks(2268), "contentment" },
+                    { 3, new DateTime(2023, 11, 8, 21, 52, 47, 165, DateTimeKind.Local).AddTicks(2272), "friends" },
+                    { 4, new DateTime(2023, 11, 8, 21, 52, 47, 165, DateTimeKind.Local).AddTicks(2276), "friendship" },
+                    { 5, new DateTime(2023, 11, 8, 21, 52, 47, 165, DateTimeKind.Local).AddTicks(2279), "life" },
+                    { 6, new DateTime(2023, 11, 8, 21, 52, 47, 165, DateTimeKind.Local).AddTicks(2282), "conduct-of-life" },
+                    { 7, new DateTime(2023, 11, 8, 21, 52, 47, 165, DateTimeKind.Local).AddTicks(2285), "country" },
+                    { 8, new DateTime(2023, 11, 8, 21, 52, 47, 165, DateTimeKind.Local).AddTicks(2289), "happniess" },
+                    { 9, new DateTime(2023, 11, 8, 21, 52, 47, 165, DateTimeKind.Local).AddTicks(2292), "music" },
+                    { 10, new DateTime(2023, 11, 8, 21, 52, 47, 165, DateTimeKind.Local).AddTicks(2295), "nature" },
+                    { 11, new DateTime(2023, 11, 8, 21, 52, 47, 165, DateTimeKind.Local).AddTicks(2298), "work" }
                 });
 
             migrationBuilder.InsertData(

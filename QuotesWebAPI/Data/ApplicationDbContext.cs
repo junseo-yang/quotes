@@ -20,14 +20,16 @@ namespace QuotesWebAPI.Data
                     QuoteId = 1,
                     Description = "Good friends, good books, and a sleepy conscience: this is the ideal life.",
                     Author = "Mark Twain",
-                    Like = 3
+                    Like = 3,
+                    LastModified = DateTime.Now
                 },
                 new Quote
                 {
                     QuoteId = 2,
                     Description = "Many people lose the small joys in the hope for the big happiness.",
                     Author = "Pearl S. Buck",
-                    Like = 4
+                    Like = 4,
+                    LastModified = DateTime.Now
                 },
                 new Quote
                 {
@@ -38,7 +40,8 @@ namespace QuotesWebAPI.Data
                                     "then rest, nature, books, music, love for one's neighbor — such is my idea " +
                                     "of happiness.",
                     Author = "Leo Tolstoy",
-                    Like = 5
+                    Like = 5,
+                    LastModified = DateTime.Now
                 }
             );
 
@@ -46,57 +49,68 @@ namespace QuotesWebAPI.Data
                 new Tag
                 {
                     TagId = 1,
-                    Name = "books"
+                    Name = "books",
+                    LastModified = DateTime.Now
                 },
                 new Tag
                 {
                     TagId = 2,
-                    Name = "contentment"
+                    Name = "contentment",
+                    LastModified = DateTime.Now
                 },
                 new Tag
                 {
                     TagId = 3,
-                    Name = "friends"
+                    Name = "friends",
+                    LastModified = DateTime.Now
                 },
                 new Tag
                 {
                     TagId = 4,
-                    Name = "friendship"
+                    Name = "friendship",
+                    LastModified = DateTime.Now
                 },
                 new Tag
                 {
                     TagId = 5,
-                    Name = "life"
+                    Name = "life",
+                    LastModified = DateTime.Now
                 },
                 new Tag
                 {
                     TagId = 6,
-                    Name = "conduct-of-life"
+                    Name = "conduct-of-life",
+                    LastModified = DateTime.Now
                 },
                 new Tag
                 {
                     TagId = 7,
-                    Name = "country"
+                    Name = "country",
+                    LastModified = DateTime.Now
                 },
                 new Tag
                 {
                     TagId = 8,
-                    Name = "happniess"
+                    Name = "happniess",
+                    LastModified = DateTime.Now
                 },
                 new Tag
                 {
                     TagId = 9,
-                    Name = "music"
+                    Name = "music",
+                    LastModified = DateTime.Now
                 },
                 new Tag
                 {
                     TagId = 10,
-                    Name = "nature"
+                    Name = "nature",
+                    LastModified = DateTime.Now
                 },
                 new Tag
                 {
                     TagId = 11,
-                    Name = "work"
+                    Name = "work",
+                    LastModified = DateTime.Now
                 }
             );
 
