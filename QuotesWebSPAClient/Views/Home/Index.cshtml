@@ -2,7 +2,39 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <div class="col-sm-12 col-md-6">
+        <h4>Quotes:</h4>
+        <div id="quotesList">
+
+        </div>
+        <div id="quotesListMessage" class="alert alert-primary" style="display:none" role="alert">
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6">
+        <h4>Add a Quote:</h4>
+        <form>
+            <div class="form-group">
+                <label for="quoteDescription">Description</label>
+                <input type="text" id="quoteDescription" name="quoteDescription" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="quoteAuthor">Author:</label>
+                <input type="text" id="quoteAuthor" name="quoteAuthor" class="form-control" />
+            </div>
+
+            <!-- for now, hard-code category names: -->
+            <select id="taskCategory" name="taskCategory" class="form-control">
+                <option value="">Please select a task category</option>
+
+                <option value="Home">Home</option>
+                <option value="Work">Work</option>
+                <option value="Shopping">Shopping</option>
+            </select>
+
+            <button type="button" id="addTaskBtn" class="btn btn-primary">Add task</button>
+        </form>
+        <p id="newQuoteMessage"></p>
+    </div>
 </div>

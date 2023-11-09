@@ -34,6 +34,7 @@ namespace QuotesWebAPI.Controllers
                                             QuoteId = q.QuoteId,
                                             Description = q.Description,
                                             Author = q.Author,
+                                            Like = q.Like,
                                             Tags = _context.TagAssignments.Include(ta => ta.Tag)
                                                         .Where(ta => ta.QuoteId == q.QuoteId)
                                                         .Select(ta => ta.Tag.Name)
@@ -52,22 +53,6 @@ namespace QuotesWebAPI.Controllers
                 QuotesLastModified = quoteLastModified,
                 Tags = tags
             };
-
-            //foreach (var quote in quotes)
-            //{
-            //    quoteViewModels.Add(new QuoteViewModel
-            //    {
-            //        QuoteId = quote.QuoteId,
-            //        Description = quote.Description,
-            //        Author = quote.Author,
-            //        Like = quote.Like,
-            //        Tags = _context.TagAssignments.Include(ta => ta.Tag)
-            //                .Where(ta => ta.QuoteId == quote.QuoteId)
-            //                .Select(ta => ta.Tag.Name)
-            //                .ToList()
-            //    });
-            //}
-
 
             return Ok(quoteViewModel);
         }
