@@ -11,7 +11,7 @@ namespace QuotesWebAPI.Models
         public string? Description { get; set; }
 
         [Display(Name = "Author")]
-        public string Author { get; set; } = "Anonymous";
+        public string? Author { get; set; }
 
         [Display(Name = "Like")]
         [Range(0, int.MaxValue, ErrorMessage = "Likes should be greater than or equal to 9.")]
