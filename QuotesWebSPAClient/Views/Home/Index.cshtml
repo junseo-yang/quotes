@@ -20,20 +20,16 @@
             </div>
 
             <div class="form-group">
-                <label for="quoteAuthor">Author:</label>
+                <label for="quoteAuthor">Author</label>
                 <input type="text" id="quoteAuthor" name="quoteAuthor" class="form-control" />
             </div>
 
-            <!-- for now, hard-code category names: -->
-            <select id="taskCategory" name="taskCategory" class="form-control">
-                <option value="">Please select a task category</option>
+            <div class="form-group ui-widget">
+                <label for="quoteTags">Tags</label>
+                <input type="text" id="quoteTags" name="quoteTags" class="form-control" />
+            </div>
 
-                <option value="Home">Home</option>
-                <option value="Work">Work</option>
-                <option value="Shopping">Shopping</option>
-            </select>
-
-            <button type="button" id="addTaskBtn" class="btn btn-primary">Add task</button>
+            <button type="button" id="addQuoteBtn" class="btn btn-primary">Add quote</button>
         </form>
         <p id="newQuoteMessage"></p>
     </div>

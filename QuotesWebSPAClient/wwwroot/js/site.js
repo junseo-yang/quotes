@@ -7,8 +7,10 @@
 
     let _quotesUrl = 'https://localhost:7223/api/quotes';
 
+    let _availableTags = '';
+
     let loadQuotes = async function () {
-        // call out to the Web API using fetch (enabling CORS) to get our tasks:
+        // call out to the Web API using fetch (enabling CORS) to get our quotes:
         let resp = await fetch(_quotesUrl, {
             mode: "cors",
             headers: {
@@ -26,6 +28,9 @@
         if (resp.status === 200) {
             let quotesResult = await resp.json();
             let quotes = quotesResult.quotes;
+
+            // Populate availableTags
+            _availableTags = quotesResult.tags;
 
             if (quotes.length === 0) {
                 _quotesListMessage.text('No quotes to display - use the form to add some.');
@@ -101,6 +106,48 @@
             _newTodoMsg.attr('class', 'text-danger');
         }
         _newTodoMsg.fadeOut(10000);
+    });
+
+    // Autocomplete
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        $("#quoteTags")
+            // don't navigate away from the field on tab when selecting an item
+            .on("keydown", function (event) {
+                if (event.keyCode === $.ui.keyCode.TAB &&
+                    $(this).autocomplete("instance").menu.active) {
+                    event.preventDefault();
+                }
+            })
+            .autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    // delegate back to autocomplete, but extract the last term
+                    response($.ui.autocomplete.filter(
+                        _availableTags, extractLast(request.term)));
+                },
+                focus: function () {
+                    // prevent value inserted on focus
+                    return false;
+                },
+                select: function (event, ui) {
+                    var terms = split(this.value);
+                    // remove the current input
+                    terms.pop();
+                    // add the selected item
+                    terms.push(ui.item.value);
+                    // add placeholder to get the comma-and-space at the end
+                    terms.push("");
+                    this.value = terms.join(", ");
+                    return false;
+                }
+            });
     });
 
     // first a 1 time call and then set up a timer to call load todos fn:
