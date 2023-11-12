@@ -1,6 +1,10 @@
 import os
 import requests
 import json
+import urllib3
+
+# Suppress the warning when http request to localhost 
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def cls():
     os.system('cls' if os.name=='nt' else 'clear')
@@ -26,10 +30,13 @@ def load_quotes():
 
             json_data_list.append(json)
 
-    for json in json_data_list:
-        resp = requests.post(url, json=json, headers=headers, verify=False)
-
-    return resp.json()
+    try:
+        for json in json_data_list:
+            requests.post(url, json=json, headers=headers, verify=False)
+        
+        print("Quotes have been loaded successfully.")
+    except:
+        print("Something went wrong. Check the API Server.")
 
 # Clear Console
 cls()
