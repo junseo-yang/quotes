@@ -1,6 +1,7 @@
 $(document).ready(function () {
     let _tagsList = $('#tagsList');
     let _tagsListMessage = $('#tagsListMessage');
+    let _newTagMessage = $('#newTagMessage');
 
     let _tagsLastModified = new Date(1970, 0, 1);
 
@@ -60,6 +61,36 @@ $(document).ready(function () {
             _tagsListMessage.fadeOut(3000);
         }
     };
+
+    // add a click handler to POST new tasks to our API:
+    $('#addTagBtn').click(async function () {
+        // Create a new tag by reading the form input fields:
+        let newTag = {
+            name: $('#tagName').val()
+        };
+
+        let resp = await fetch(_tagsUrl, {
+            mode: "cors",
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newTag)
+        });
+
+        if (resp.status === 201) {
+            _newTagMessage.text('The task was added successfully');
+            _newTagMessage.attr('class', 'text-success');
+            $('#tagName').val('')
+        } else if(resp.status === 409) {
+            _newTagMessage.text('The tag already exists. Try another one.');
+            _newTagMessage.attr('class', 'text-danger');
+        } else {
+            _newTagMessage.text('Hmmm, there was a problem loading the tags');
+            _newTagMessage.attr('class', 'text-danger');
+        }
+        _newTagMessage.fadeOut(3000);
+    });
 
     // first a 1 time call and then set up a timer to call load todos fn:
     loadTags();
