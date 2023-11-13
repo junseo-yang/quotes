@@ -14,3 +14,5 @@
 * https://dev.to/thedevdrawer/single-page-application-routing-using-hash-or-url-9jh
 * https://www.youtube.com/watch?v=6BozpmSjk-Y&list=WL&index=187&ab_channel=dcode
 * https://stackoverflow.com/questions/51345024/read-text-file-and-parse-in-python
+* https://www.youtube.com/watch?v=wNWyMsrpbz0&ab_channel=GTCoding
+* https://nextjs.org/docs/app/building-your-application/data-fetching/patterns
