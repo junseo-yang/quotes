@@ -92,6 +92,37 @@ $(document).ready(function () {
         _newTagMessage.fadeOut(3000);
     });
 
+    $("body").on("click", "#editTagBtn", async function() {
+        // Update an existing tag by reading the form input fields:
+        let updatedTag = {
+            tagId: $('#tagId').val(),
+            name: $('#tagName').val()
+        };
+
+        let resp = await fetch(_tagsUrl, {
+            mode: "cors",
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedTag)
+        });
+
+        if (resp.status === 200) {
+            window.location.replace(window.location.protocol + '//' + window.location.host + '/tags');
+            _tagStatusMessage.text('The task was updated successfully');
+            _tagStatusMessage.attr('class', 'text-success');
+        } else if(resp.status === 409) {
+            _tagStatusMessage.text('The tag already exists. Try another one.');
+            _tagStatusMessage.attr('class', 'text-danger');
+        } else {
+            _tagStatusMessage.text('Hmmm, there was a problem loading the tags');
+            _tagStatusMessage.attr('class', 'text-danger');
+        }
+        _tagStatusMessage.show();
+        _tagStatusMessage.fadeOut(3000);
+    });
+
     // first a 1 time call and then set up a timer to call load todos fn:
     loadTags();
     setInterval(loadTags, 1000);
