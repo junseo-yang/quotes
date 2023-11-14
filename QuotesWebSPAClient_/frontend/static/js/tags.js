@@ -45,7 +45,6 @@ $(document).ready(function () {
                             <td>${tags[i].name}</td>
                             <td>
                                 <a class="btn btn-sm btn-primary" href="/tags/${tags[i].tagId}">Edit</a>
-                                <a class="btn btn-sm btn-danger">Delete</a>
                             </td>
                         </tr>
                         `)
