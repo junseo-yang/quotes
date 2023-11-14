@@ -35,6 +35,9 @@ export default class extends AbstractView {
     await loadTag();
     
     return `
+      <div id="tagStatusMessage" style="display:none" role="alert">
+
+      </div>
       <h1>Tag</h1>
       <h4>Edit a Tag:</h4>
         <form>

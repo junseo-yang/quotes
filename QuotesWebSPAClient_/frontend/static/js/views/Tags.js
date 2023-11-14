@@ -8,6 +8,9 @@ export default class extends AbstractView {
 
     async getHtml() {
         return `
+            <div id="tagStatusMessage" style="display:none" role="alert">
+
+            </div>
             <h1>Tags</h1>
 
             <div class="row">
@@ -39,7 +42,6 @@ export default class extends AbstractView {
 
                   <button type="button" id="addTagBtn" class="btn btn-primary">Add tag</button>
                 </form>
-                <p id="newTagMessage"></p>
               </div>
             </div>
         `;
