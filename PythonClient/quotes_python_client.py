@@ -1,7 +1,7 @@
 import os
 import requests
-import json
 import urllib3
+import random
 
 # Suppress the warning when http request to localhost 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -38,6 +38,28 @@ def load_quotes():
     except:
         print("Something went wrong. Check the API Server.")
 
+def display_random_quote():
+    url = 'https://localhost:7223/api/quotes'
+
+    headers = {
+        'Content-Type': 'application/json'
+    }
+
+    try:
+        # Send a get request to get all quotes
+        response = requests.get(url, headers=headers, verify=False).json()
+        quotes = response['quotes']
+
+        # Select a random quote
+        quote = random.choice(quotes)
+
+        # Print a random quote
+        print()
+        print("A random quote")
+        print(f"'{quote['description']}' by '{quote['author']}' (Likes: {quote['like']})")
+    except:
+        print("Something went wrong. Check the API Server.")
+
 # Clear Console
 cls()
 print("Welcome to QuotesPythonClient!")
@@ -65,7 +87,7 @@ while True:
     if selection == 1:
         print(selection)
     elif selection == 2:
-        print(selection)
+        display_random_quote()
     elif selection == 3:
         if quotes_loaded:
             print("Quotes has already been loaded.")
@@ -74,21 +96,3 @@ while True:
             load_quotes()
     else:
         print("Select option 1 ~ 3. Try Again.")
-
-
-def write_tasks_to_file(task_data):
-    for t in task_data:
-        # opening a file for writing named by the task's ID:
-        curr_task_id = t['taskId']
-        task_file = open(f'data/{curr_task_id}_.json', 'w')
-
-        # write/dump to the file the JSON for that task:
-        task_file.write(json.dumps(t, indent=4))
-
-        # close the file:
-        task_file.close()
-
-# call our 2 functions:
-tasks = get_all_tasks()
-write_tasks_to_file(tasks)
-
