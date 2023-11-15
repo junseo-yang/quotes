@@ -118,19 +118,23 @@ namespace QuotesWebAPI.Controllers
         {
             // Handling Tags
             var tags = _context.Tags.ToList();
-            
+
+            List<string> unsupportedTags = new List<string>();
+
             // If newQuoteRequest includes that tags not exist
             foreach (string tag in newQuoteRequest.Tags)
             {
                 // If tag doesn't exist in DB
                 if (!tags.Exists(t => t.Name == tag))
                 {
-                    // Then add it
-                    _context.Tags.Add(new Tag()
-                    {
-                        Name = tag
-                    });
+                    // Then add it to the error list 
+                    unsupportedTags.Add(tag);
                 }
+            }
+
+            if (unsupportedTags.Count > 0)
+            {
+                return BadRequest(new { error = "Unsupported tags are included. Remove them and try again." });
             }
 
             // Handling Quotes
