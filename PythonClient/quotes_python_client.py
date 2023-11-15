@@ -60,6 +60,41 @@ def display_random_quote():
     except:
         print("Something went wrong. Check the API Server.")
 
+def add_new_quote():
+    quotes_url = 'https://localhost:7223/api/quotes'
+    tags_url = 'https://localhost:7223/api/tags'
+
+    headers = {
+        'Content-Type': 'application/json'
+    }
+
+    try:
+        # Get Available Tags
+        print()
+        print("Available Tags")
+        response = requests.get(tags_url, headers=headers, verify=False).json()
+        tags = [tag['name'] for tag in response['tags']]
+        print(tags)
+
+        # Get User Input to create quote
+        print()
+        quote_input = input("Enter a quote: ")
+        author_input = input("Enter an author: ")
+        tags_input = [tag for tag in input("Enter tags from Available Tags (Use ', ' for separate. e.g., 'life, happiness'): ").split(", ")]
+        json = {
+            "description": quote_input,
+            "author": author_input,
+            "tags": tags_input}
+        
+        # Post
+        response = requests.post(quotes_url, json=json, headers=headers, verify=False)
+        if (response.ok):
+            print("The quote has been created successfully.")
+        else:
+            raise Exception('Network Error')
+    except:
+        print("Something went wrong. Check the API Server. Or enter valid tags.")
+
 # Clear Console
 cls()
 print("Welcome to QuotesPythonClient!")
@@ -85,7 +120,7 @@ while True:
     
     # Execute
     if selection == 1:
-        print(selection)
+        add_new_quote()
     elif selection == 2:
         display_random_quote()
     elif selection == 3:
