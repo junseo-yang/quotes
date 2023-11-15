@@ -91,7 +91,7 @@ namespace QuotesWebAPI.Data
                 new Tag
                 {
                     TagId = 8,
-                    Name = "happniess",
+                    Name = "happiness",
                     LastModified = DateTime.Now
                 },
                 new Tag

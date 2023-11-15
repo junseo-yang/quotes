@@ -53,7 +53,7 @@ namespace QuotesWebAPI.Migrations
                             QuoteId = 1,
                             Author = "Mark Twain",
                             Description = "Good friends, good books, and a sleepy conscience: this is the ideal life.",
-                            LastModified = new DateTime(2023, 11, 9, 16, 17, 6, 746, DateTimeKind.Local).AddTicks(5556),
+                            LastModified = new DateTime(2023, 11, 14, 22, 48, 56, 749, DateTimeKind.Local).AddTicks(2497),
                             Like = 3
                         },
                         new
@@ -61,7 +61,7 @@ namespace QuotesWebAPI.Migrations
                             QuoteId = 2,
                             Author = "Pearl S. Buck",
                             Description = "Many people lose the small joys in the hope for the big happiness.",
-                            LastModified = new DateTime(2023, 11, 9, 16, 17, 6, 746, DateTimeKind.Local).AddTicks(5561),
+                            LastModified = new DateTime(2023, 11, 14, 22, 48, 56, 749, DateTimeKind.Local).AddTicks(2501),
                             Like = 4
                         },
                         new
@@ -69,7 +69,7 @@ namespace QuotesWebAPI.Migrations
                             QuoteId = 3,
                             Author = "Leo Tolstoy",
                             Description = "A quiet secluded life in the country, with the possibility of being useful to people to whom it is easy to do good, and who are not accustomed to have it done to them; then work which one hopes may be of some use; then rest, nature, books, music, love for one's neighbor — such is my idea of happiness.",
-                            LastModified = new DateTime(2023, 11, 9, 16, 17, 6, 746, DateTimeKind.Local).AddTicks(5564),
+                            LastModified = new DateTime(2023, 11, 14, 22, 48, 56, 749, DateTimeKind.Local).AddTicks(2504),
                             Like = 5
                         });
                 });
@@ -97,67 +97,67 @@ namespace QuotesWebAPI.Migrations
                         new
                         {
                             TagId = 1,
-                            LastModified = new DateTime(2023, 11, 9, 16, 17, 6, 746, DateTimeKind.Local).AddTicks(5717),
+                            LastModified = new DateTime(2023, 11, 14, 22, 48, 56, 749, DateTimeKind.Local).AddTicks(2657),
                             Name = "books"
                         },
                         new
                         {
                             TagId = 2,
-                            LastModified = new DateTime(2023, 11, 9, 16, 17, 6, 746, DateTimeKind.Local).AddTicks(5721),
+                            LastModified = new DateTime(2023, 11, 14, 22, 48, 56, 749, DateTimeKind.Local).AddTicks(2661),
                             Name = "contentment"
                         },
                         new
                         {
                             TagId = 3,
-                            LastModified = new DateTime(2023, 11, 9, 16, 17, 6, 746, DateTimeKind.Local).AddTicks(5724),
+                            LastModified = new DateTime(2023, 11, 14, 22, 48, 56, 749, DateTimeKind.Local).AddTicks(2664),
                             Name = "friends"
                         },
                         new
                         {
                             TagId = 4,
-                            LastModified = new DateTime(2023, 11, 9, 16, 17, 6, 746, DateTimeKind.Local).AddTicks(5727),
+                            LastModified = new DateTime(2023, 11, 14, 22, 48, 56, 749, DateTimeKind.Local).AddTicks(2668),
                             Name = "friendship"
                         },
                         new
                         {
                             TagId = 5,
-                            LastModified = new DateTime(2023, 11, 9, 16, 17, 6, 746, DateTimeKind.Local).AddTicks(5730),
+                            LastModified = new DateTime(2023, 11, 14, 22, 48, 56, 749, DateTimeKind.Local).AddTicks(2671),
                             Name = "life"
                         },
                         new
                         {
                             TagId = 6,
-                            LastModified = new DateTime(2023, 11, 9, 16, 17, 6, 746, DateTimeKind.Local).AddTicks(5733),
+                            LastModified = new DateTime(2023, 11, 14, 22, 48, 56, 749, DateTimeKind.Local).AddTicks(2674),
                             Name = "conduct-of-life"
                         },
                         new
                         {
                             TagId = 7,
-                            LastModified = new DateTime(2023, 11, 9, 16, 17, 6, 746, DateTimeKind.Local).AddTicks(5736),
+                            LastModified = new DateTime(2023, 11, 14, 22, 48, 56, 749, DateTimeKind.Local).AddTicks(2677),
                             Name = "country"
                         },
                         new
                         {
                             TagId = 8,
-                            LastModified = new DateTime(2023, 11, 9, 16, 17, 6, 746, DateTimeKind.Local).AddTicks(5740),
-                            Name = "happniess"
+                            LastModified = new DateTime(2023, 11, 14, 22, 48, 56, 749, DateTimeKind.Local).AddTicks(2680),
+                            Name = "happiness"
                         },
                         new
                         {
                             TagId = 9,
-                            LastModified = new DateTime(2023, 11, 9, 16, 17, 6, 746, DateTimeKind.Local).AddTicks(5743),
+                            LastModified = new DateTime(2023, 11, 14, 22, 48, 56, 749, DateTimeKind.Local).AddTicks(2683),
                             Name = "music"
                         },
                         new
                         {
                             TagId = 10,
-                            LastModified = new DateTime(2023, 11, 9, 16, 17, 6, 746, DateTimeKind.Local).AddTicks(5746),
+                            LastModified = new DateTime(2023, 11, 14, 22, 48, 56, 749, DateTimeKind.Local).AddTicks(2686),
                             Name = "nature"
                         },
                         new
                         {
                             TagId = 11,
-                            LastModified = new DateTime(2023, 11, 9, 16, 17, 6, 746, DateTimeKind.Local).AddTicks(5749),
+                            LastModified = new DateTime(2023, 11, 14, 22, 48, 56, 749, DateTimeKind.Local).AddTicks(2689),
                             Name = "work"
                         });
                 });
