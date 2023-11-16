@@ -55,6 +55,12 @@ namespace QuotesWebAPI.Controllers
                             })
                             .Where(t => t.TagId == id)
                             .FirstOrDefault();
+
+            if (tag == null)
+            {
+                return NotFound(new { tagId = id, error = "The tagId doesn't exist." }); ;
+            }
+
             return Ok(tag);
         }
 
@@ -112,6 +118,7 @@ namespace QuotesWebAPI.Controllers
             }
 
             tag.Name = newTagInfo.Name;
+            tag.LastModified = DateTime.Now;
 
             _context.Update(tag);
             _context.SaveChanges();

@@ -60,9 +60,9 @@ $(document).ready(function () {
                                 </div>
                                 <br/ >
                                 <div class="d-flex justify-content-between">
-                                    <a class="btn btn-primary btn-sm" href="#" role="button">
+                                    <button class="btn btn-primary btn-sm btn-like" value="${quotes[i].quoteId}">
                                         Likes <span class="badge bg-light text-dark">${quotes[i].like}</span>
-                                    </a>
+                                    </button>
                                     <a class="btn btn-sm btn-primary" href="/quotes/${quotes[i].quoteId}">Edit</a>
                                 </div>
                             </div>
@@ -252,7 +252,39 @@ $(document).ready(function () {
         });
     });
 
-    // first a 1 time call and then set up a timer to call load todos fn:
+    // Like by quoteId
+    $("body").on("click", ".btn-like", async function() {
+        let _quoteStatusMessage = $('#quoteStatusMessage')
+        let quoteId = $(this).val();
+
+        // Make put request to the quoteId
+        await fetch(_quotesUrl + `/${quoteId}`, {
+            mode: "cors",
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(resp => {
+            _quoteStatusMessage.empty();
+            if (resp.status === 200) {
+                _quoteStatusMessage.text('The quote has been updated successfully');
+                _quoteStatusMessage.attr('class', 'alert alert-success');
+            } else {
+                _quoteStatusMessage.text('Hmmm, there was a problem editing the quotes');
+                _quoteStatusMessage.attr('class', 'alert alert-danger');
+            }
+        }).catch(error => {
+            console.error(error);
+            _quoteStatusMessage.empty();
+            _quoteStatusMessage.text('Hmmm, there was a problem editing the Tags. Check the API server.');
+            _quoteStatusMessage.attr('class', 'alert alert-danger');
+        });
+
+        _quoteStatusMessage.show()
+        _quoteStatusMessage.fadeOut(5000);
+    });
+
+    // first a 1 time call and then set up a timer to call load quotes fn:
     loadQuotes();
     setInterval(loadQuotes, 1000);
 });

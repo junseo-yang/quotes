@@ -80,6 +80,11 @@ namespace QuotesWebAPI.Controllers
                             .Where(q => q.QuoteId == id)
                             .FirstOrDefault();
 
+            if (quote == null)
+            {
+                return NotFound(new { quoteId = id, error = "The quoteId doesn't exist." }); ;
+            }
+
             return Ok(quote);
         }
 
@@ -147,6 +152,7 @@ namespace QuotesWebAPI.Controllers
                 QuoteId = newQuote.QuoteId,
                 Description = newQuote.Description,
                 Author = newQuote.Author,
+                Like = newQuote.Like,
                 Tags = tagList
             };
 
@@ -194,6 +200,7 @@ namespace QuotesWebAPI.Controllers
             // Update Quote
             quote.Description = newQuoteInfo.Description;
             quote.Author = newQuoteInfo.Author.IsNullOrEmpty()? "Anonymous" : newQuoteInfo.Author;
+            quote.LastModified = DateTime.Now;
 
             _context.Update(quote);
             _context.SaveChanges();
@@ -226,6 +233,7 @@ namespace QuotesWebAPI.Controllers
                 QuoteId = quote.QuoteId,
                 Description = quote.Description,
                 Author = quote.Author,
+                Like = quote.Like,
                 Tags = _context.TagAssignments.Include(ta => ta.Tag)
                                                 .Where(ta => ta.QuoteId == quote.QuoteId)
                                                 .Select(ta => ta.Tag.Name)
@@ -233,6 +241,43 @@ namespace QuotesWebAPI.Controllers
             };
 
             return Ok(quoteInfo);
+        }
+
+        // GET: api/quotes/5
+        [HttpPut("api/quotes/{id}")]
+        public IActionResult LikeById(int id)
+        {
+            var quote = _context.Quotes.Where(q => q.QuoteId == id).FirstOrDefault();
+
+            if (quote == null)
+            {
+                return NotFound(new { quoteId = id, error = "The quoteId doesn't exist." }); ;
+            }
+
+            quote.Like++;
+            quote.LastModified = DateTime.Now;
+
+            _context.Update(quote);
+            _context.SaveChanges();
+
+            QuoteInfo quoteInfo = _context.Quotes
+                            .Include(q => q.TagAssignments)
+                            .ThenInclude(q => q.Tag)
+                            .Select(q => new QuoteInfo()
+                            {
+                                QuoteId = q.QuoteId,
+                                Description = q.Description,
+                                Author = q.Author,
+                                Like = q.Like,
+                                Tags = _context.TagAssignments.Include(ta => ta.Tag)
+                                            .Where(ta => ta.QuoteId == q.QuoteId)
+                                            .Select(ta => ta.Tag.Name)
+                                            .ToList()
+                            })
+                            .Where(q => q.QuoteId == id)
+                            .FirstOrDefault();
+
+            return Ok(quote);
         }
     }
 }
