@@ -40,20 +40,19 @@ export default class extends AbstractView {
       </div>
       <h1>Tag</h1>
       <h4>Edit a Tag:</h4>
-        <form>
-          <div class="form-group">
-            <label for="tagId">TagId</label>
-            <input type="text" id="tagId" name="tagId" class="form-control" value="${this.tagId}" disabled/>
-          </div>
+      <form>
+        <div class="form-group">
+          <label for="tagId">TagId</label>
+          <input type="text" id="tagId" name="tagId" class="form-control" value="${this.tagId}" disabled/>
+        </div>
 
-          <div class="form-group">
-            <label for="tagName">Name</label>
-            <input type="text" id="tagName" name="tagName" class="form-control" value="${_tagName}" />
-          </div>
+        <div class="form-group">
+          <label for="tagName">Name</label>
+          <input type="text" id="tagName" name="tagName" class="form-control" value="${_tagName}" />
+        </div>
 
-          <button type="button" id="editTagBtn" class="btn btn-primary">Update tag</button>
-        </form>
-      <p id="editTagMessage"></p>
+        <button type="button" id="editTagBtn" class="btn btn-primary">Update tag</button>
+      </form>
     `;
   }
 }

@@ -59,9 +59,11 @@ $(document).ready(function () {
                                 }()}
                                 </div>
                                 <br/ >
-                                <a class="btn btn-primary btn-sm" href="#" role="button">
-                                    Likes <span class="badge bg-light text-dark">${quotes[i].like}</span>
-                                </a>
+                                <div class="d-flex justify-content-between">
+                                    <a class="btn btn-primary btn-sm" href="#" role="button">
+                                        Likes <span class="badge bg-light text-dark">${quotes[i].like}</span>
+                                    </a>
+                                    <a class="btn btn-sm btn-primary" href="/quotes/${quotes[i].quoteId}">Edit</a>
                                 </div>
                             </div>
                         `)
@@ -121,7 +123,7 @@ $(document).ready(function () {
         });
     });
 
-    // Autocomplete
+    // Autocomplete for Add Quote
     $(function () {
         function split(val) {
             return val.split(/,\s*/);
@@ -161,6 +163,95 @@ $(document).ready(function () {
                     return false;
                 }
             });
+    });
+
+    $("body").on("click", "#editQuoteBtn", async function() {
+        let _quoteStatusMessage = $('#quoteStatusMessage')
+
+        // Update an existing tag by reading the form input fields:
+        let updatedQuote = {
+            quoteId: $('#quoteId').val(),
+            description: $('#quoteDescription').val(),
+            author: $('#quoteAuthor').val(),
+            tags: $('#quoteTags').val().split(", ").filter(n => n)
+        };
+
+        await fetch(_quotesUrl, {
+            mode: "cors",
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedQuote)
+        }).then(resp => {
+            _quoteStatusMessage.empty();
+            if (resp.status === 200) {
+                _quoteStatusMessage.text('The quote has been updated successfully');
+                _quoteStatusMessage.attr('class', 'alert alert-success');
+            } else if(resp.status === 400) {
+                _quoteStatusMessage.text('The description is empty or the tags are not supported. Try again.');
+                _quoteStatusMessage.attr('class', 'alert alert-danger');
+            } else if(resp.status === 500) {
+                _quoteStatusMessage.text('You might have some duplicate tags. Try again.');
+                _quoteStatusMessage.attr('class', 'alert alert-danger');
+            } else {
+                _quoteStatusMessage.text('Hmmm, there was a problem editing the quotes');
+                _quoteStatusMessage.attr('class', 'alert alert-danger');
+            }
+            _quoteStatusMessage.show();
+            _quoteStatusMessage.fadeOut(3000);
+        }).catch(error => {
+            console.error(error);
+            _quoteStatusMessage.empty();
+            _quoteStatusMessage.text('Hmmm, there was a problem editing the Tags. Check the API server.');
+            _quoteStatusMessage.attr('class', 'alert alert-danger');
+            _quoteStatusMessage.show()
+            _quoteStatusMessage.fadeOut(3000);
+        });
+    });
+
+    // Autocomplete for Edit Quote
+    $("body").on("keydown", "#quoteTags", async function() {
+        $(function () {
+            function split(val) {
+                return val.split(/,\s*/);
+            }
+            function extractLast(term) {
+                return split(term).pop();
+            }
+
+            $("#quoteTags")
+                // don't navigate away from the field on tab when selecting an item
+                .on("keydown", function (event) {
+                    if (event.keyCode === $.ui.keyCode.TAB &&
+                        $(this).autocomplete("instance").menu.active) {
+                        event.preventDefault();
+                    }
+                })
+                .autocomplete({
+                    minLength: 0,
+                    source: function (request, response) {
+                        // delegate back to autocomplete, but extract the last term
+                        response($.ui.autocomplete.filter(
+                            _availableTags, extractLast(request.term)));
+                    },
+                    focus: function () {
+                        // prevent value inserted on focus
+                        return false;
+                    },
+                    select: function (event, ui) {
+                        var terms = split(this.value);
+                        // remove the current input
+                        terms.pop();
+                        // add the selected item
+                        terms.push(ui.item.value);
+                        // add placeholder to get the comma-and-space at the end
+                        terms.push("");
+                        this.value = terms.join(", ");
+                        return false;
+                    }
+                });
+        });
     });
 
     // first a 1 time call and then set up a timer to call load todos fn:

@@ -120,13 +120,13 @@ $(document).ready(function () {
         }).then(resp => {
             _tagStatusMessage.empty();
             if (resp.status === 200) {
-                _tagStatusMessage.text('The task was updated successfully');
+                _tagStatusMessage.text('The tag has been updated successfully');
                 _tagStatusMessage.attr('class', 'alert alert-success');
             } else if(resp.status === 409) {
                 _tagStatusMessage.text('The tag already exists. Try another one.');
                 _tagStatusMessage.attr('class', 'alert alert-danger');
             } else {
-                _tagStatusMessage.text('Hmmm, there was a problem loading the tags');
+                _tagStatusMessage.text('Hmmm, there was a problem editing the tags');
                 _tagStatusMessage.attr('class', 'alert alert-danger');
             }
             _tagStatusMessage.show();
@@ -134,7 +134,7 @@ $(document).ready(function () {
         }).catch(error => {
             console.error(error);
             _tagStatusMessage.empty();
-            _tagStatusMessage.text('Hmmm, there was a problem adding the Tags. Check the API server.');
+            _tagStatusMessage.text('Hmmm, there was a problem editing the Tags. Check the API server.');
             _tagStatusMessage.attr('class', 'alert alert-danger');
             _tagStatusMessage.show()
             _tagStatusMessage.fadeOut(3000);

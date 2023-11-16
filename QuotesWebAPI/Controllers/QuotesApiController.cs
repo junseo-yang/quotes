@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.IdentityModel.Tokens;
 using QuotesWebAPI.Data;
 using QuotesWebAPI.Models;
 using System.Security.Cryptography;
@@ -81,37 +83,6 @@ namespace QuotesWebAPI.Controllers
             return Ok(quote);
         }
 
-        //// PUT: api/quotes/5
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutQuote(int id, Quote quote)
-        //{
-        //    if (id != quote.QuoteId)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(quote).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!QuoteExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
-
         // POST: api/quotes
         [HttpPost("api/quotes")]
         public IActionResult PostQuote([FromBody] NewQuoteRequest newQuoteRequest)
@@ -176,29 +147,86 @@ namespace QuotesWebAPI.Controllers
             return CreatedAtAction(nameof(GetQuoteById), new { id = quote.QuoteId }, quote);
         }
 
-        //// DELETE: api/QuotesApi/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteQuote(int id)
-        //{
-        //    if (_context.Quotes == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    var quote = await _context.Quotes.FindAsync(id);
-        //    if (quote == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // PUT: api/quotes/5
+        [HttpPut("api/quotes")]
+        public async Task<IActionResult> PutQuote([FromBody] QuoteInfo newQuoteInfo)
+        {
+            var quote = await _context.Quotes.Include(q => q.TagAssignments).Where(q => q.QuoteId == newQuoteInfo.QuoteId).FirstOrDefaultAsync();
 
-        //    _context.Quotes.Remove(quote);
-        //    await _context.SaveChangesAsync();
+            if (quote == null)
+            {
+                return NotFound(new { tagId = newQuoteInfo.QuoteId, error = "The quoteId doesn't exist." }); ;
+            }
 
-        //    return NoContent();
-        //}
+            // If description is empty, return Bad request
+            if (newQuoteInfo.Description.IsNullOrEmpty())
+            {
+                return BadRequest(new { error = "Description cannot be empty." });
+            }
 
-        //private bool QuoteExists(int id)
-        //{
-        //    return (_context.Quotes?.Any(e => e.QuoteId == id)).GetValueOrDefault();
-        //}
+            // Handling Tags
+            var tags = await _context.Tags.ToListAsync();
+
+            List<string> unsupportedTags = new List<string>();
+
+            // If newQuoteRequest includes that tags not exist
+            foreach (string tag in newQuoteInfo.Tags)
+            {
+                // If tag doesn't exist in DB
+                if (!tags.Exists(t => t.Name == tag))
+                {
+                    // Then add it to the error list 
+                    unsupportedTags.Add(tag);
+                }
+            }
+
+            if (unsupportedTags.Count > 0)
+            {
+                return BadRequest(new { error = "Unsupported tags are included. Remove them and try again." });
+            }
+
+            // Update Quote
+            quote.Description = newQuoteInfo.Description;
+            quote.Author = newQuoteInfo.Author.IsNullOrEmpty()? "Anonymous" : newQuoteInfo.Author;
+
+            _context.Update(quote);
+            _context.SaveChanges();
+
+            // Remove all TagAssignments for update
+            List<TagAssignment> tagAssignments = new List<TagAssignment>();
+            quote.TagAssignments.ToList().ForEach(ta => tagAssignments.Add(ta));
+            _context.RemoveRange(tagAssignments);
+
+            tagAssignments = new List<TagAssignment>();
+
+            // Update TagAssignments
+            foreach (var tag in newQuoteInfo.Tags.ToList())
+            {
+                tagAssignments.Add(
+                    new TagAssignment
+                    {
+                        QuoteId = quote.QuoteId,
+                        TagId = tags.Find(t => t.Name == tag).TagId
+                    }
+                );
+            }
+
+            quote.TagAssignments = tagAssignments;
+            _context.SaveChanges();
+
+            // Return updated quote
+            QuoteInfo quoteInfo = new QuoteInfo()
+            {
+                QuoteId = quote.QuoteId,
+                Description = quote.Description,
+                Author = quote.Author,
+                Tags = _context.TagAssignments.Include(ta => ta.Tag)
+                                                .Where(ta => ta.QuoteId == quote.QuoteId)
+                                                .Select(ta => ta.Tag.Name)
+                                                .ToList()
+            };
+
+            return Ok(quoteInfo);
+        }
     }
 }
