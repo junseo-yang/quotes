@@ -58,7 +58,7 @@ $(document).ready(function () {
             _tagStatusMessage.text('Hmmm, there was a problem loading the Tags. Check the API server.');
             _tagStatusMessage.attr('class', 'alert alert-danger');
             _tagStatusMessage.show()
-            _tagStatusMessage.fadeOut(3000);
+            _tagStatusMessage.fadeOut(5000);
         });
     };
 
@@ -82,6 +82,9 @@ $(document).ready(function () {
                 _tagStatusMessage.text('The tag was added successfully');
                 _tagStatusMessage.attr('class', 'alert alert-success');
                 $('#tagName').val('')
+            } else if(resp.status === 400) {
+                _tagStatusMessage.text('The Name cannot be empty.');
+                _tagStatusMessage.attr('class', 'alert alert-danger');
             } else if(resp.status === 409) {
                 _tagStatusMessage.text('The tag already exists. Try another one.');
                 _tagStatusMessage.attr('class', 'alert alert-danger');
@@ -89,16 +92,15 @@ $(document).ready(function () {
                 _tagStatusMessage.text('Hmmm, there was a problem adding the tag');
                 _tagStatusMessage.attr('class', 'alert alert-danger');
             }
-            _tagStatusMessage.show();
-            _tagStatusMessage.fadeOut(3000);
         }).catch(error => {
             console.error(error);
             _tagStatusMessage.empty();
             _tagStatusMessage.text('Hmmm, there was a problem adding the Tags. Check the API server.');
             _tagStatusMessage.attr('class', 'alert alert-danger');
-            _tagStatusMessage.show()
-            _tagStatusMessage.fadeOut(3000);
         });
+
+        _tagStatusMessage.show()
+        _tagStatusMessage.fadeOut(5000);
     });
 
     $("body").on("click", "#editTagBtn", async function() {
@@ -129,16 +131,15 @@ $(document).ready(function () {
                 _tagStatusMessage.text('Hmmm, there was a problem editing the tags');
                 _tagStatusMessage.attr('class', 'alert alert-danger');
             }
-            _tagStatusMessage.show();
-            _tagStatusMessage.fadeOut(3000);
         }).catch(error => {
             console.error(error);
             _tagStatusMessage.empty();
             _tagStatusMessage.text('Hmmm, there was a problem editing the Tags. Check the API server.');
             _tagStatusMessage.attr('class', 'alert alert-danger');
-            _tagStatusMessage.show()
-            _tagStatusMessage.fadeOut(3000);
         });
+
+        _tagStatusMessage.show()
+        _tagStatusMessage.fadeOut(5000);
     });
 
     // first a 1 time call and then set up a timer to call load tags fn:

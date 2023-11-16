@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using QuotesWebAPI.Data;
 using QuotesWebAPI.Models;
 
@@ -62,6 +63,11 @@ namespace QuotesWebAPI.Controllers
         public IActionResult Post([FromBody] NewTagRequest newTagRequest)
         {
             var tags = _context.Tags.ToList();
+
+            if (newTagRequest.Name.IsNullOrEmpty())
+            {
+                return BadRequest(new { error = "Name cannot be empty." });
+            }
 
             var existingTag = tags.Where(t => t.Name == newTagRequest.Name).FirstOrDefault();
             // Tag Name Unique Validation

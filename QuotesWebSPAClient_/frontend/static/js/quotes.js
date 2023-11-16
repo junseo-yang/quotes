@@ -76,7 +76,7 @@ $(document).ready(function () {
             _quoteStatusMessage.text('Hmmm, there was a problem loading the quotes. Check the API server.');
             _quoteStatusMessage.attr('class', 'alert alert-danger');
             _quoteStatusMessage.show()
-            _quoteStatusMessage.fadeOut(3000);
+            _quoteStatusMessage.fadeOut(5000);
         });
     };
 
@@ -105,22 +105,21 @@ $(document).ready(function () {
                 $('#quoteAuthor').val('');
                 $('#quoteTags').val('');
             } else if(resp.status === 400) {
-                _quoteStatusMessage.text('The tags are not supported. Try another one with autocomplete.');
+                _quoteStatusMessage.text('The description is empty or the tags are not supported. Try again.');
                 _quoteStatusMessage.attr('class', 'alert alert-danger');
             } else {
                 _quoteStatusMessage.text('Hmmm, there was a problem adding the quote');
                 _quoteStatusMessage.attr('class', 'alert alert-danger');
             }
-            _quoteStatusMessage.show();
-            _quoteStatusMessage.fadeOut(3000);
         }).catch(error => {
             console.error(error);
             _quoteStatusMessage.empty();
             _quoteStatusMessage.text('Hmmm, there was a problem adding the Tags. Check the API server.');
             _quoteStatusMessage.attr('class', 'alert alert-danger');
-            _quoteStatusMessage.show()
-            _quoteStatusMessage.fadeOut(3000);
         });
+
+        _quoteStatusMessage.show()
+        _quoteStatusMessage.fadeOut(5000);
     });
 
     // Autocomplete for Add Quote
@@ -198,16 +197,15 @@ $(document).ready(function () {
                 _quoteStatusMessage.text('Hmmm, there was a problem editing the quotes');
                 _quoteStatusMessage.attr('class', 'alert alert-danger');
             }
-            _quoteStatusMessage.show();
-            _quoteStatusMessage.fadeOut(3000);
         }).catch(error => {
             console.error(error);
             _quoteStatusMessage.empty();
             _quoteStatusMessage.text('Hmmm, there was a problem editing the Tags. Check the API server.');
             _quoteStatusMessage.attr('class', 'alert alert-danger');
-            _quoteStatusMessage.show()
-            _quoteStatusMessage.fadeOut(3000);
         });
+
+        _quoteStatusMessage.show()
+        _quoteStatusMessage.fadeOut(5000);
     });
 
     // Autocomplete for Edit Quote

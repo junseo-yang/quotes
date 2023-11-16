@@ -108,11 +108,17 @@ namespace QuotesWebAPI.Controllers
                 return BadRequest(new { error = "Unsupported tags are included. Remove them and try again." });
             }
 
+            // Quote Description Validation
+            if (newQuoteRequest.Description.IsNullOrEmpty())
+            {
+                return BadRequest(new { error = "Description cannot be empty." });
+            }
+
             // Handling Quotes
             Quote newQuote = new Quote()
             {
                 Description = newQuoteRequest.Description,
-                Author = newQuoteRequest.Author
+                Author = newQuoteRequest.Author.IsNullOrEmpty() ? "Anonymous" : newQuoteRequest.Author
             };
 
             _context.Add(newQuote);
