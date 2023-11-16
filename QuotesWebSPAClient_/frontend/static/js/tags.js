@@ -79,7 +79,7 @@ $(document).ready(function () {
         }).then(resp => {
             _tagStatusMessage.empty();
             if (resp.status === 201) {
-                _tagStatusMessage.text('The task was added successfully');
+                _tagStatusMessage.text('The tag was added successfully');
                 _tagStatusMessage.attr('class', 'alert alert-success');
                 $('#tagName').val('')
             } else if(resp.status === 409) {

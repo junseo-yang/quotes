@@ -8,6 +8,9 @@ export default class extends AbstractView {
 
   async getHtml() {
     return `
+            <div id="quoteStatusMessage" style="display:none" role="alert">
+
+            </div>
             <h1>Quotes</h1>
             <div class="row">
               <div class="col-sm-12 col-md-6">
@@ -39,7 +42,6 @@ export default class extends AbstractView {
 
                   <button type="button" id="addQuoteBtn" class="btn btn-primary">Add quote</button>
                 </form>
-                <p id="newQuoteMessage"></p>
               </div>
             </div>
           `;
