@@ -107,6 +107,9 @@ $(document).ready(function () {
             } else if(resp.status === 400) {
                 _quoteStatusMessage.text('The description is empty or the tags are not supported. Try again.');
                 _quoteStatusMessage.attr('class', 'alert alert-danger');
+            } else if(resp.status === 500) {
+                _quoteStatusMessage.text('You might have some duplicate tags. Try again.');
+                _quoteStatusMessage.attr('class', 'alert alert-danger');
             } else {
                 _quoteStatusMessage.text('Hmmm, there was a problem adding the quote');
                 _quoteStatusMessage.attr('class', 'alert alert-danger');

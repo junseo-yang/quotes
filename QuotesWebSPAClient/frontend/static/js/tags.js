@@ -124,6 +124,9 @@ $(document).ready(function () {
             if (resp.status === 200) {
                 _tagStatusMessage.text('The tag has been updated successfully');
                 _tagStatusMessage.attr('class', 'alert alert-success');
+            } else if(resp.status === 400) {
+                _tagStatusMessage.text('The Name cannot be empty.');
+                _tagStatusMessage.attr('class', 'alert alert-danger');
             } else if(resp.status === 409) {
                 _tagStatusMessage.text('The tag already exists. Try another one.');
                 _tagStatusMessage.attr('class', 'alert alert-danger');

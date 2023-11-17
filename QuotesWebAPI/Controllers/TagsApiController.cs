@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using QuotesWebAPI.Data;
 using QuotesWebAPI.Models;
@@ -19,14 +20,14 @@ namespace QuotesWebAPI.Controllers
 
         // GET: api/tags
         [HttpGet("api/tags")]
-        public IActionResult GetTags()
+        public async Task<IActionResult> GetTags()
         {
-            List<TagInfo> tags = _context.Tags
+            List<TagInfo> tags = await _context.Tags
                                     .Select(t => new TagInfo()
                                     {
                                         TagId = t.TagId,
                                         Name = t.Name
-                                    }).ToList();
+                                    }).ToListAsync();
 
             DateTime tagLastModified = new DateTime(1970, 1, 1);
             if (tags.Count > 0)
@@ -45,16 +46,16 @@ namespace QuotesWebAPI.Controllers
 
         // GET api/tags/5
         [HttpGet("api/tags/{id}")]
-        public IActionResult GetTagById(int id)
+        public async Task<IActionResult> GetTagById(int id)
         {
-            TagInfo tag = _context.Tags
+            TagInfo? tag = await _context.Tags
                             .Select(t => new TagInfo()
                             {
                                 TagId = t.TagId,
                                 Name = t.Name
                             })
                             .Where(t => t.TagId == id)
-                            .FirstOrDefault();
+                            .FirstOrDefaultAsync();
 
             if (tag == null)
             {
@@ -66,9 +67,9 @@ namespace QuotesWebAPI.Controllers
 
         // POST api/tags
         [HttpPost("api/tags")]
-        public IActionResult Post([FromBody] NewTagRequest newTagRequest)
+        public async Task<IActionResult> Post([FromBody] NewTagRequest newTagRequest)
         {
-            var tags = _context.Tags.ToList();
+            var tags = await _context.Tags.ToListAsync();
 
             if (newTagRequest.Name.IsNullOrEmpty())
             {
@@ -100,16 +101,21 @@ namespace QuotesWebAPI.Controllers
         }
 
         [HttpPut("api/tags")]
-        public IActionResult Put([FromBody] TagInfo newTagInfo)
+        public async Task<IActionResult> Put([FromBody] TagInfo newTagInfo)
         {
-            var tag = _context.Tags.Where(t => t.TagId == newTagInfo.TagId).FirstOrDefault();
+            var tag = await _context.Tags.Where(t => t.TagId == newTagInfo.TagId).FirstOrDefaultAsync();
 
             if (tag == null)
             {
                 return NotFound(new { tagId = newTagInfo.TagId, error = "The tagId doesn't exist." }); ;
             }
 
-            var existingTag = _context.Tags.Where(t => t.Name == newTagInfo.Name).FirstOrDefault();
+            if (newTagInfo.Name.IsNullOrEmpty())
+            {
+                return BadRequest(new { error = "Name cannot be empty." });
+            }
+
+            var existingTag = await _context.Tags.Where(t => t.Name == newTagInfo.Name).FirstOrDefaultAsync();
             
             // Tag Name Unique Validation
             if (existingTag != null)

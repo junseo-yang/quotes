@@ -1,4 +1,4 @@
-﻿using Azure;
+using Azure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,11 +24,11 @@ namespace QuotesWebAPI.Controllers
 
         // GET: api/quotes
         [HttpGet("api/quotes")]
-        public IActionResult GetQuotes()
+        public async Task<IActionResult> GetQuotes()
         {
-            var tags = _context.Tags.Select(t => t.Name).ToList();
+            var tags = await _context.Tags.Select(t => t.Name).ToListAsync();
 
-            List<QuoteInfo> quotes = _context.Quotes
+            List<QuoteInfo> quotes = await _context.Quotes
                                         .Include(q => q.TagAssignments)
                                         .ThenInclude(q => q.Tag)
                                         .Select(q => new QuoteInfo()
@@ -41,7 +41,7 @@ namespace QuotesWebAPI.Controllers
                                                         .Where(ta => ta.QuoteId == q.QuoteId)
                                                         .Select(ta => ta.Tag.Name)
                                                         .ToList()
-                                        }).ToList();
+                                        }).ToListAsync();
             
             DateTime quoteLastModified = new DateTime(1970, 1, 1);
             if (quotes.Count > 0)
@@ -61,9 +61,9 @@ namespace QuotesWebAPI.Controllers
 
         // GET: api/quotes/5
         [HttpGet("api/quotes/{id}")]
-        public IActionResult GetQuoteById(int id)
+        public async Task<IActionResult> GetQuoteById(int id)
         {
-            QuoteInfo quote = _context.Quotes
+            QuoteInfo? quote = await _context.Quotes
                             .Include(q => q.TagAssignments)
                             .ThenInclude(q => q.Tag)
                             .Select(q => new QuoteInfo()
@@ -78,7 +78,7 @@ namespace QuotesWebAPI.Controllers
                                             .ToList()
                             })
                             .Where(q => q.QuoteId == id)
-                            .FirstOrDefault();
+                            .FirstOrDefaultAsync();
 
             if (quote == null)
             {
@@ -90,10 +90,10 @@ namespace QuotesWebAPI.Controllers
 
         // POST: api/quotes
         [HttpPost("api/quotes")]
-        public IActionResult PostQuote([FromBody] NewQuoteRequest newQuoteRequest)
+        public async Task<IActionResult> PostQuote([FromBody] NewQuoteRequest newQuoteRequest)
         {
             // Handling Tags
-            var tags = _context.Tags.ToList();
+            var tags = await _context.Tags.ToListAsync();
 
             List<string> unsupportedTags = new List<string>();
 
@@ -245,9 +245,9 @@ namespace QuotesWebAPI.Controllers
 
         // GET: api/quotes/5
         [HttpPut("api/quotes/{id}")]
-        public IActionResult LikeById(int id)
+        public async Task<IActionResult> LikeById(int id)
         {
-            var quote = _context.Quotes.Where(q => q.QuoteId == id).FirstOrDefault();
+            var quote = await _context.Quotes.Where(q => q.QuoteId == id).FirstOrDefaultAsync();
 
             if (quote == null)
             {
@@ -260,7 +260,7 @@ namespace QuotesWebAPI.Controllers
             _context.Update(quote);
             _context.SaveChanges();
 
-            QuoteInfo quoteInfo = _context.Quotes
+            QuoteInfo quoteInfo = await _context.Quotes
                             .Include(q => q.TagAssignments)
                             .ThenInclude(q => q.Tag)
                             .Select(q => new QuoteInfo()
@@ -275,7 +275,7 @@ namespace QuotesWebAPI.Controllers
                                             .ToList()
                             })
                             .Where(q => q.QuoteId == id)
-                            .FirstOrDefault();
+                            .FirstOrDefaultAsync();
 
             return Ok(quote);
         }
