@@ -2,6 +2,10 @@ import os
 import requests
 import urllib3
 import random
+from pathlib import Path
+
+ROOT_DIR = Path(__file__).parent
+TEXT_FILE = ROOT_DIR / 'quotes.txt'
 
 # Suppress the warning when http request to localhost 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -17,7 +21,7 @@ def load_quotes():
     }
 
     json_data_list = []
-    with open('quotes.txt') as f:
+    with open(TEXT_FILE) as f:
         lines = f.readlines() # list containing lines of file
 
         for line in lines:
