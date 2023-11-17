@@ -1,4 +1,4 @@
-using Azure;
+﻿using Azure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -278,6 +278,50 @@ namespace QuotesWebAPI.Controllers
                             .FirstOrDefaultAsync();
 
             return Ok(quote);
+        }
+
+        [HttpGet("api/topquotes/{number:int?}")]
+        public async Task<IActionResult> GetLikedQuotesByNumber(int number = 10)
+        {
+            if (number < 0)
+            {
+                return BadRequest(new { error = "Number of Quotes cannot be negative." });
+            }
+
+            var tags = await _context.Tags.Select(t => t.Name).ToListAsync();
+
+            List<QuoteInfo> quotes = await _context.Quotes
+                                        .Include(q => q.TagAssignments)
+                                        .ThenInclude(q => q.Tag)
+                                        .Select(q => new QuoteInfo()
+                                        {
+                                            QuoteId = q.QuoteId,
+                                            Description = q.Description,
+                                            Author = q.Author,
+                                            Like = q.Like,
+                                            Tags = _context.TagAssignments.Include(ta => ta.Tag)
+                                                        .Where(ta => ta.QuoteId == q.QuoteId)
+                                                        .Select(ta => ta.Tag.Name)
+                                                        .ToList()
+                                        })
+                                        .OrderByDescending(q => q.Like)
+                                        .Take(number)
+                                        .ToListAsync();
+
+            DateTime quoteLastModified = new DateTime(1970, 1, 1);
+            if (quotes.Count > 0)
+            {
+                quoteLastModified = _context.Quotes.Max(t => t.LastModified).GetValueOrDefault();
+            }
+
+            QuoteViewModel quoteViewModel = new QuoteViewModel()
+            {
+                Quotes = quotes,
+                QuotesLastModified = quoteLastModified,
+                Tags = tags
+            };
+
+            return Ok(quoteViewModel);
         }
     }
 }

@@ -45,25 +45,26 @@ $(document).ready(function () {
 
                     for (let i = 0; i < quotes.length; i++) {
                         _quotesList.append(`
-                            <div class="card" style="width: auto;">
+                            <div class="card m-2" style="width: auto;">
                                 <div class="card-body">
-                                <h5 class="card-title">${quotes[i].author}</h5>
-                                <p class="card-text">"${quotes[i].description}"</p>
-                                <div>
-                                ${function displayTags() {
-                                    let tags = '';
-                                    for (let j = 0; j < quotes[i].tags.length; j++) {
-                                        tags += `<span class="badge rounded-pill bg-secondary">${quotes[i].tags[j]}</span>`;
-                                    }
-                                    return tags;
-                                }()}
-                                </div>
-                                <br/ >
-                                <div class="d-flex justify-content-between">
-                                    <button class="btn btn-primary btn-sm btn-like" value="${quotes[i].quoteId}">
-                                        Likes <span class="badge bg-light text-dark">${quotes[i].like}</span>
-                                    </button>
-                                    <a class="btn btn-sm btn-primary" href="/quotes/${quotes[i].quoteId}">Edit</a>
+                                    <h5 class="card-title">${quotes[i].author}</h5>
+                                    <p class="card-text">"${quotes[i].description}"</p>
+                                    <div>
+                                    ${function displayTags() {
+                                        let tags = '';
+                                        for (let j = 0; j < quotes[i].tags.length; j++) {
+                                            tags += `<span class="badge rounded-pill bg-secondary">${quotes[i].tags[j]}</span>`;
+                                        }
+                                        return tags;
+                                    }()}
+                                    </div>
+                                    <br/ >
+                                    <div class="d-flex justify-content-between">
+                                        <button class="btn btn-primary btn-sm btn-like" value="${quotes[i].quoteId}">
+                                            Likes <span class="badge bg-light text-dark">${quotes[i].like}</span>
+                                        </button>
+                                        <a class="btn btn-sm btn-primary" href="/quotes/${quotes[i].quoteId}">Edit</a>
+                                    </div>
                                 </div>
                             </div>
                         `)
