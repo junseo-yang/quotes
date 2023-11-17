@@ -45,7 +45,7 @@ $(document).ready(function () {
 
                     for (let i = 0; i < quotes.length; i++) {
                         _quotesList.append(`
-                            <div class="card" style="width: 18rem;">
+                            <div class="card" style="width: auto;">
                                 <div class="card-body">
                                 <h5 class="card-title">${quotes[i].author}</h5>
                                 <p class="card-text">"${quotes[i].description}"</p>
