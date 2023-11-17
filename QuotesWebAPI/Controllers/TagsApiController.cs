@@ -86,5 +86,38 @@ namespace QuotesWebAPI.Controllers
 
             return CreatedAtAction(nameof(GetTagById), new { id = tag.TagId }, tag);
         }
+
+        [HttpPut("api/tags")]
+        public IActionResult Put([FromBody] TagInfo newTagInfo)
+        {
+            var tag = _context.Tags.Where(t => t.TagId == newTagInfo.TagId).FirstOrDefault();
+
+            if (tag == null)
+            {
+                return NotFound(new { tagId = newTagInfo.TagId, error = "The tagId doesn't exist." }); ;
+            }
+
+            var existingTag = _context.Tags.Where(t => t.Name == newTagInfo.Name).FirstOrDefault();
+
+            // Tag Name Unique Validation
+            if (existingTag != null)
+            {
+                return Conflict(new { existingTag, error = "The tag name already exists. Try another." });
+            }
+
+            tag.Name = newTagInfo.Name;
+            tag.LastModified = DateTime.Now;
+
+            _context.Update(tag);
+            _context.SaveChanges();
+
+            TagInfo tagInfo = new TagInfo()
+            {
+                TagId = tag.TagId,
+                Name = tag.Name
+            };
+
+            return Ok(tagInfo);
+        }
     }
 }
