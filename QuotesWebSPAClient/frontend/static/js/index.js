@@ -11,7 +11,6 @@ import Quotes from "./views/Quotes.js";
 import QuoteView from "./views/QuoteView.js";
 import Tags from "./views/Tags.js";
 import TagView from "./views/TagView.js";
-import TopQuotes from "./views/TopQuotes.js";
 
 
 const pathToRegex = path => new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
@@ -35,7 +34,6 @@ const router = async () => {
         { path: "/", view: Home },
         { path: "/quotes", view: Quotes },
         { path: "/quotes/:id", view: QuoteView },
-        { path: "/topquotes/:number", view: TopQuotes },
         { path: "/tags", view: Tags },
         { path: "/tags/:id", view: TagView }
     ];

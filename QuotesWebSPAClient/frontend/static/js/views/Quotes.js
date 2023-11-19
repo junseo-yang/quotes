@@ -20,10 +20,15 @@ export default class extends AbstractView {
 
             </div>
             <h1>Quotes</h1>
-            <div id="viewTopQuotes">
+            <div>
               <div class="form-group">
                 <label for="quotesByTag">Search Quotes by Tag</label>
                 <input type="text" id="quotesByTag" name="quotesByTag" class="form-control" />
+              </div>
+
+              <div class="form-group">
+                <label for="numberOfQuotes">Enter a number to display Top Quotes by Likes</label>
+                <input type="number" id="numberOfQuotes" name="numberOfQuotes" class="form-control" min=0 />
               </div>
             </div>
             <div class="row">

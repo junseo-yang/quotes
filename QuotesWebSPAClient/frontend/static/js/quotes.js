@@ -21,10 +21,25 @@ $(document).ready(function () {
         let _quotesUrl = 'https://localhost:7223/api/quotes';
 
         let _quotesByTag = $('#quotesByTag').val();
+        let _numberOfQuotes = $('#numberOfQuotes').val();
 
-        if (_quotesByTag) {
-            _quotesUrl += `?tag=${_quotesByTag}`;
+        if (_numberOfQuotes < 0) {
+            _quoteStatusMessage.text('Number of Top Quotes cannot be negative.');
+            _quoteStatusMessage.attr('class', 'alert alert-danger');
+            _quoteStatusMessage.show()
+            _quoteStatusMessage.fadeOut(5000);
+            _numberOfQuotes = 0;
         }
+        // Handle 
+        if(_quotesByTag && _numberOfQuotes) {
+            _quotesUrl += `?tag=${_quotesByTag}&&top=${_numberOfQuotes}`;
+        } else if(!_quotesByTag && _numberOfQuotes) {
+            _quotesUrl += `?top=${_numberOfQuotes}`;
+        } else if(_quotesByTag && !_numberOfQuotes) {
+            _quotesUrl += `?tag=${_quotesByTag}`;
+        } else {
+            _quotesUrl = 'https://localhost:7223/api/quotes';
+        } 
 
         // call out to the Web API using fetch (enabling CORS) to get our quotes:
         await fetch(_quotesUrl, {

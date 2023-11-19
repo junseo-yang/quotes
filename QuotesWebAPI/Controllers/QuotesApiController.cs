@@ -5,17 +5,11 @@
  *      Junseo Yang, 2023-11-19: Created
  */
 
-using Azure;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.IdentityModel.Tokens;
 using QuotesWebAPI.Data;
 using QuotesWebAPI.Models;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using System.Xml;
 
 namespace QuotesWebAPI.Controllers
 {
@@ -34,79 +28,107 @@ namespace QuotesWebAPI.Controllers
 
         // GET: api/quotes
         [HttpGet("api/quotes")]
-        public async Task<IActionResult> GetQuotes([FromQuery] string? tag)
+        public async Task<IActionResult> GetQuotes([FromQuery] string? tag, int top = 0)
         {
-            if (tag.IsNullOrEmpty())
+            var tags = await _context.Tags.Select(t => t.Name).ToListAsync();
+
+            List<QuoteInfo> quotes = new List<QuoteInfo>();
+
+            // tag is not null or empty and top == 0
+            if(!tag.IsNullOrEmpty() && top == 0)
             {
-                var tags = await _context.Tags.Select(t => t.Name).ToListAsync();
-
-                List<QuoteInfo> quotes = await _context.Quotes
-                                            .Include(q => q.TagAssignments)
-                                            .ThenInclude(q => q.Tag)
-                                            .Select(q => new QuoteInfo()
-                                            {
-                                                QuoteId = q.QuoteId,
-                                                Description = q.Description,
-                                                Author = q.Author,
-                                                Like = q.Like,
-                                                Tags = _context.TagAssignments.Include(ta => ta.Tag)
-                                                            .Where(ta => ta.QuoteId == q.QuoteId)
-                                                            .Select(ta => ta.Tag.Name)
-                                                            .ToList()
-                                            })
-                                            .ToListAsync();
-
-                DateTime quoteLastModified = new DateTime(1970, 1, 1);
-                if (quotes.Count > 0)
-                {
-                    quoteLastModified = _context.Quotes.Max(t => t.LastModified).GetValueOrDefault();
-                }
-
-                QuoteViewModel quoteViewModel = new QuoteViewModel()
-                {
-                    Quotes = quotes,
-                    QuotesLastModified = quoteLastModified,
-                    Tags = tags
-                };
-
-                return Ok(quoteViewModel);
+                quotes = await _context.Quotes
+                        .Include(q => q.TagAssignments)
+                        .ThenInclude(q => q.Tag)
+                        .Select(q => new QuoteInfo()
+                        {
+                            QuoteId = q.QuoteId,
+                            Description = q.Description,
+                            Author = q.Author,
+                            Like = q.Like,
+                            Tags = _context.TagAssignments.Include(ta => ta.Tag)
+                                        .Where(ta => ta.QuoteId == q.QuoteId)
+                                        .Select(ta => ta.Tag.Name)
+                                        .ToList()
+                        })
+                        .Where(q => q.Tags.Contains(tag))
+                        .ToListAsync();
+            }
+            // tag is null or empty and top != 0
+            else if (tag.IsNullOrEmpty() && top != 0)
+            {
+                quotes = await _context.Quotes
+                                        .Include(q => q.TagAssignments)
+                                        .ThenInclude(q => q.Tag)
+                                        .Select(q => new QuoteInfo()
+                                        {
+                                            QuoteId = q.QuoteId,
+                                            Description = q.Description,
+                                            Author = q.Author,
+                                            Like = q.Like,
+                                            Tags = _context.TagAssignments.Include(ta => ta.Tag)
+                                                        .Where(ta => ta.QuoteId == q.QuoteId)
+                                                        .Select(ta => ta.Tag.Name)
+                                                        .ToList()
+                                        })
+                                        .OrderByDescending(q => q.Like)
+                                        .Take(top)
+                                        .ToListAsync();
+            }
+            else if (!tag.IsNullOrEmpty() && top != 0)
+            {
+                quotes = await _context.Quotes
+                                        .Include(q => q.TagAssignments)
+                                        .ThenInclude(q => q.Tag)
+                                        .Select(q => new QuoteInfo()
+                                        {
+                                            QuoteId = q.QuoteId,
+                                            Description = q.Description,
+                                            Author = q.Author,
+                                            Like = q.Like,
+                                            Tags = _context.TagAssignments.Include(ta => ta.Tag)
+                                                        .Where(ta => ta.QuoteId == q.QuoteId)
+                                                        .Select(ta => ta.Tag.Name)
+                                                        .ToList()
+                                        })
+                                        .Where(q => q.Tags.Contains(tag))
+                                        .OrderByDescending(q => q.Like)
+                                        .Take(top)
+                                        .ToListAsync();
             }
             else
             {
-                var tags = await _context.Tags.Select(t => t.Name).ToListAsync();
-
-                List<QuoteInfo> quotes = await _context.Quotes
-                                            .Include(q => q.TagAssignments)
-                                            .ThenInclude(q => q.Tag)
-                                            .Select(q => new QuoteInfo()
-                                            {
-                                                QuoteId = q.QuoteId,
-                                                Description = q.Description,
-                                                Author = q.Author,
-                                                Like = q.Like,
-                                                Tags = _context.TagAssignments.Include(ta => ta.Tag)
-                                                            .Where(ta => ta.QuoteId == q.QuoteId)
-                                                            .Select(ta => ta.Tag.Name)
-                                                            .ToList()
-                                            })
-                                            .Where(q => q.Tags.Contains(tag))
-                                            .ToListAsync();
-
-                DateTime quoteLastModified = new DateTime(1970, 1, 1);
-                if (quotes.Count > 0)
-                {
-                    quoteLastModified = _context.Quotes.Max(t => t.LastModified).GetValueOrDefault();
-                }
-
-                QuoteViewModel quoteViewModel = new QuoteViewModel()
-                {
-                    Quotes = quotes,
-                    QuotesLastModified = quoteLastModified,
-                    Tags = tags
-                };
-
-                return Ok(quoteViewModel);
+                quotes = await _context.Quotes
+                                        .Include(q => q.TagAssignments)
+                                        .ThenInclude(q => q.Tag)
+                                        .Select(q => new QuoteInfo()
+                                        {
+                                            QuoteId = q.QuoteId,
+                                            Description = q.Description,
+                                            Author = q.Author,
+                                            Like = q.Like,
+                                            Tags = _context.TagAssignments.Include(ta => ta.Tag)
+                                                        .Where(ta => ta.QuoteId == q.QuoteId)
+                                                        .Select(ta => ta.Tag.Name)
+                                                        .ToList()
+                                        })
+                                        .ToListAsync();
             }
+
+            DateTime quoteLastModified = new DateTime(1970, 1, 1);
+            if (quotes.Count > 0)
+            {
+                quoteLastModified = _context.Quotes.Max(t => t.LastModified).GetValueOrDefault();
+            }
+
+            QuoteViewModel quoteViewModel = new QuoteViewModel()
+            {
+                Quotes = quotes,
+                QuotesLastModified = quoteLastModified,
+                Tags = tags
+            };
+
+            return Ok(quoteViewModel);
         }
 
         // GET: api/quotes/5
