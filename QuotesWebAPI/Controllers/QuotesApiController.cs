@@ -129,6 +129,12 @@ namespace QuotesWebAPI.Controllers
                 return BadRequest(new { error = "Description cannot be empty." });
             }
 
+            // Quote Tags Duplicate Validation
+            if (newQuoteRequest.Tags.Distinct().Count() != newQuoteRequest.Tags.Count())
+            {
+                return BadRequest(new { error = "Tags cannot be duplicated." });
+            }
+
             // Handling Quotes
             Quote newQuote = new Quote()
             {
@@ -184,6 +190,12 @@ namespace QuotesWebAPI.Controllers
             if (newQuoteInfo.Description.IsNullOrEmpty())
             {
                 return BadRequest(new { error = "Description cannot be empty." });
+            }
+
+            // Quote Tags Duplicate Validation
+            if (newQuoteInfo.Tags.Distinct().Count() != newQuoteInfo.Tags.Count())
+            {
+                return BadRequest(new { error = "Tags cannot be duplicated." });
             }
 
             // Handling Tags

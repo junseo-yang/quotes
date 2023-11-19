@@ -114,10 +114,7 @@ $(document).ready(function () {
                 $('#quoteAuthor').val('');
                 $('#quoteTags').val('');
             } else if(resp.status === 400) {
-                _quoteStatusMessage.text('The description is empty or the tags are not supported. Try again.');
-                _quoteStatusMessage.attr('class', 'alert alert-danger');
-            } else if(resp.status === 500) {
-                _quoteStatusMessage.text('You might have some duplicate tags. Try again.');
+                _quoteStatusMessage.text('The description is empty, the tags are not supported, or the tags might be duplicated. Try again.');
                 _quoteStatusMessage.attr('class', 'alert alert-danger');
             } else {
                 _quoteStatusMessage.text('Hmmm, there was a problem adding the quote');
@@ -201,10 +198,7 @@ $(document).ready(function () {
                 _quoteStatusMessage.text('The quote has been updated successfully');
                 _quoteStatusMessage.attr('class', 'alert alert-success');
             } else if(resp.status === 400) {
-                _quoteStatusMessage.text('The description is empty or the tags are not supported. Try again.');
-                _quoteStatusMessage.attr('class', 'alert alert-danger');
-            } else if(resp.status === 500) {
-                _quoteStatusMessage.text('You might have some duplicate tags. Try again.');
+                _quoteStatusMessage.text('The description is empty, the tags are not supported, or the tags might be duplicated. Try again.');
                 _quoteStatusMessage.attr('class', 'alert alert-danger');
             } else {
                 _quoteStatusMessage.text('Hmmm, there was a problem editing the quotes');
