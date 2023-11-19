@@ -1,7 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿/* Quote.cs
+ * Class for Quote
+ * 
+ * Revision History:
+ *      Junseo Yang, 2023-11-19: Created
+ */
+
+using System.ComponentModel.DataAnnotations;
 
 namespace QuotesWebAPI.Models
 {
+    /// <summary>
+    /// Class for Quote
+    /// </summary>
     public class Quote
     {
         public int QuoteId { get; set; }

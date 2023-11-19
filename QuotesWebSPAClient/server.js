@@ -1,3 +1,11 @@
+/* 
+    server.js
+    Assignment 3
+    
+    Revision History
+        Junseo Yang, 2023-11-19: Created
+*/
+
 const express = require("express");
 const path = require("path");
 

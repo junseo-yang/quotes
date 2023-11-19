@@ -1,4 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/* TagsApiController.cs
+ * Class for TagsApiController
+ * 
+ * Revision History:
+ *      Junseo Yang, 2023-11-19: Created
+ */
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using QuotesWebAPI.Data;
@@ -8,6 +15,9 @@ using QuotesWebAPI.Models;
 
 namespace QuotesWebAPI.Controllers
 {
+    /// <summary>
+    /// Class for TagsApiController
+    /// </summary>
     [ApiController]
     public class TagsApiController : ControllerBase
     {
@@ -100,6 +110,7 @@ namespace QuotesWebAPI.Controllers
             return CreatedAtAction(nameof(GetTagById), new { id = tag.TagId }, tag);
         }
 
+        // PUT api/tags
         [HttpPut("api/tags")]
         public async Task<IActionResult> Put([FromBody] TagInfo newTagInfo)
         {

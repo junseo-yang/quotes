@@ -1,4 +1,11 @@
-﻿using Azure;
+﻿/* QuotesApiController.cs
+ * Class for QuotesApiController
+ * 
+ * Revision History:
+ *      Junseo Yang, 2023-11-19: Created
+ */
+
+using Azure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +19,9 @@ using System.Xml;
 
 namespace QuotesWebAPI.Controllers
 {
+    /// <summary>
+    /// Class for QuotesApiController
+    /// </summary>
     [ApiController]
     public class QuotesApiController : ControllerBase
     {

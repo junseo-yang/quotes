@@ -1,3 +1,11 @@
+/* 
+    quotes.js
+    Assignment 3
+    
+    Revision History
+        Junseo Yang, 2023-11-19: Created
+*/
+
 $(document).ready(function () {
     let _quotesList = $('#quotesList');
     let _quotesListMessage = $('#quotesListMessage');
@@ -168,6 +176,7 @@ $(document).ready(function () {
             });
     });
 
+    // add a click handler to PUT a updated quote to our API:
     $("body").on("click", "#editQuoteBtn", async function() {
         let _quoteStatusMessage = $('#quoteStatusMessage')
 

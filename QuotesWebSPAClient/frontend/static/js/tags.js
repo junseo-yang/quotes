@@ -1,3 +1,11 @@
+/* 
+    tags.js
+    Assignment 3
+    
+    Revision History
+        Junseo Yang, 2023-11-19: Created
+*/
+
 $(document).ready(function () {
     let _tagsList = $('#tagsList');
     let _tagsListMessage = $('#tagsListMessage');
@@ -62,7 +70,7 @@ $(document).ready(function () {
         });
     };
 
-    // add a click handler to POST new tasks to our API:
+    // add a click handler to POST new tags to our API:
     $('#addTagBtn').click(async function () {
         // Create a new tag by reading the form input fields:
         let newTag = {
@@ -103,6 +111,7 @@ $(document).ready(function () {
         _tagStatusMessage.fadeOut(5000);
     });
 
+    // add a click handler to PUT a updated tag to our API:
     $("body").on("click", "#editTagBtn", async function() {
         let _tagStatusMessage = $('#tagStatusMessage')
 

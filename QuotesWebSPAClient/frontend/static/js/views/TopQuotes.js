@@ -1,3 +1,11 @@
+/* 
+    TopQuotes.js
+    Assignment 3
+    
+    Revision History
+        Junseo Yang, 2023-11-19: Created
+*/
+
 import AbstractView from "./AbstractView.js";
 
 export default class extends AbstractView {

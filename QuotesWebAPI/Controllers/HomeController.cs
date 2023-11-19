@@ -1,9 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/* HomeController.cs
+ * Class for HomeController
+ * 
+ * Revision History:
+ *      Junseo Yang, 2023-11-19: Created
+ */
+
+using Microsoft.AspNetCore.Mvc;
 using QuotesWebAPI.Models;
 using System.Diagnostics;
 
 namespace QuotesWebAPI.Controllers
 {
+    /// <summary>
+    /// Class for HomeController
+    /// </summary>
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

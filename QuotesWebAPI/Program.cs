@@ -1,3 +1,10 @@
+/* Program.cs
+ * Class for QuotesWebAPI
+ * 
+ * Revision History:
+ *      Junseo Yang, 2023-11-19: Created
+ */
+
 using Microsoft.EntityFrameworkCore;
 using QuotesWebAPI.Data;
 

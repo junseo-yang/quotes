@@ -1,7 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿/* Tag.cs
+ * Class for TagAssignment
+ * 
+ * Revision History:
+ *      Junseo Yang, 2023-11-19: Created
+ */
+
+using System.ComponentModel.DataAnnotations;
 
 namespace QuotesWebAPI.Models
 {
+    /// <summary>
+    /// Class for TagAssignment
+    /// </summary>
     public class TagAssignment
     {
         [Required]

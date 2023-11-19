@@ -75,11 +75,17 @@
 ### Quotes
 [![Product Screen Shot Quotes][product-screenshot-quotes]](https://github.com/junseo-yang/PROG3170_JunseoYang)
 [![Product Screen Shot Edit Quote][product-screenshot-quotes]](https://github.com/junseo-yang/PROG3170_JunseoYang)
+
 ### Tags
 [![Product Screen Shot Tags][product-screenshot-tags]](https://github.com/junseo-yang/PROG3170_JunseoYang)
 [![Product Screen Shot Edit Tag][product-screenshot-edit-tag]](https://github.com/junseo-yang/PROG3170_JunseoYang)
+
+### Top Quotes
+[![Product Screen Shot Top 10 Quotes][product-screenshot-top-quotes-10]](https://github.com/junseo-yang/PROG3170_JunseoYang)
+[![Product Screen Shot Top 3 Quotes][product-screenshot-top-quotes-3]](https://github.com/junseo-yang/PROG3170_JunseoYang)
+
 ### Description
-You can GetAll/Create/Update Quotes and Tags
+You can GetAll/Create/Update Quotes, Tags, and Top Quotes
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -258,3 +264,5 @@ Project Link: [https://github.com/junseo-yang/PROG3170_JunseoYang](https://githu
 [product-screenshot-edit-quote]: img/edit_quote.png
 [product-screenshot-tags]: img/tags.png
 [product-screenshot-edit-tag]: img/edit_tag.png
+[product-screenshot-top-quotes-10]: img/top_quotes_10.png
+[product-screenshot-top-quotes-3]: img/top_quotes_3.png

@@ -1,3 +1,11 @@
+/* 
+    top_quotes.js
+    Assignment 3
+    
+    Revision History
+        Junseo Yang, 2023-11-19: Created
+*/
+
 $(document).ready(function () {
     let _topQuotesLastModified = new Date(1970, 0, 1);
 
@@ -81,6 +89,7 @@ $(document).ready(function () {
         });
     };
 
+    // add a click handler to Redirect to a top quotes page:
     $("body").on("click", "#viewTopQuotesBtn", async function() {
         let _topQuoteStatusMessage = $('#topQuoteStatusMessage');
 

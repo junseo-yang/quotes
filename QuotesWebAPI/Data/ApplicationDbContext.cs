@@ -1,9 +1,18 @@
-﻿
+﻿/* ApplicationDbContext.cs
+ * Class for ApplicationDbContext
+ * 
+ * Revision History:
+ *      Junseo Yang, 2023-11-19: Created
+ */
+
 using Microsoft.EntityFrameworkCore;
 using QuotesWebAPI.Models;
 
 namespace QuotesWebAPI.Data
 {
+    /// <summary>
+    /// Class for ApplicationDbContext
+    /// </summary>
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

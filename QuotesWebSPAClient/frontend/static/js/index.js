@@ -1,3 +1,11 @@
+/* 
+    index.js
+    Assignment 3
+    
+    Revision History
+        Junseo Yang, 2023-11-19: Created
+*/
+
 import Home from "./views/Home.js";
 import Quotes from "./views/Quotes.js";
 import QuoteView from "./views/QuoteView.js";
