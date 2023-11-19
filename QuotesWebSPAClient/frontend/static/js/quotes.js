@@ -18,6 +18,14 @@ $(document).ready(function () {
     let _availableTags = '';
 
     let loadQuotes = async function () {
+        let _quotesUrl = 'https://localhost:7223/api/quotes';
+
+        let _quotesByTag = $('#quotesByTag').val();
+
+        if (_quotesByTag) {
+            _quotesUrl += `?tag=${_quotesByTag}`;
+        }
+
         // call out to the Web API using fetch (enabling CORS) to get our quotes:
         await fetch(_quotesUrl, {
             mode: "cors",
@@ -37,6 +45,7 @@ $(document).ready(function () {
             _availableTags = quotesResult.tags;
 
             if (quotes.length === 0) {
+                _quotesList.empty();
                 _quotesListMessage.text('No quotes to display - use the form to add some.');
                 _quotesListMessage.show()
             } else {
@@ -44,7 +53,7 @@ $(document).ready(function () {
 
                 let latestLastModified = new Date(quotesResult.quotesLastModified);
 
-                if (latestLastModified.getTime() > _quotesLastModified.getTime()) {
+                if (latestLastModified.getTime() >= _quotesLastModified.getTime()) {
                     _quotesLastModified = latestLastModified;
 
                     // loop thru the quotes and add them to the Cards...

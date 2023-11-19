@@ -20,6 +20,12 @@ export default class extends AbstractView {
 
             </div>
             <h1>Quotes</h1>
+            <div id="viewTopQuotes">
+              <div class="form-group">
+                <label for="quotesByTag">Search Quotes by Tag</label>
+                <input type="text" id="quotesByTag" name="quotesByTag" class="form-control" />
+              </div>
+            </div>
             <div class="row">
               <div class="col-sm-12 col-md-6">
                 <h4>Quotes:</h4>

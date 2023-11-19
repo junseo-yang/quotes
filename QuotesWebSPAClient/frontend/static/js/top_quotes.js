@@ -16,7 +16,11 @@ $(document).ready(function () {
         let _topQuoteStatusMessage = $('#topQuoteStatusMessage');
         let _topQuotesListMessage = $('#topQuotesListMessage');
         let _availableTags = '';
-        let _numberOfQuotes = $("#numberOfQuotes").attr('value');;
+        let _numberOfQuotes = $("#numberOfQuotes").attr('value');
+
+        if (isNaN(_numberOfQuotes)) {
+            _numberOfQuotes = 10
+        }
 
         // call out to the Web API using fetch (enabling CORS) to get our quotes:
         await fetch(_topQuotesUrl + `/${_numberOfQuotes}`, {
