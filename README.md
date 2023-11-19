@@ -74,7 +74,7 @@
 ## About The Project
 ### Quotes
 [![Product Screen Shot Quotes][product-screenshot-quotes]](https://github.com/junseo-yang/PROG3170_JunseoYang)
-[![Product Screen Shot Edit Quote][product-screenshot-quotes]](https://github.com/junseo-yang/PROG3170_JunseoYang)
+[![Product Screen Shot Edit Quote][product-screenshot-edit-quote]](https://github.com/junseo-yang/PROG3170_JunseoYang)
 
 ### Tags
 [![Product Screen Shot Tags][product-screenshot-tags]](https://github.com/junseo-yang/PROG3170_JunseoYang)
@@ -264,5 +264,3 @@ Project Link: [https://github.com/junseo-yang/PROG3170_JunseoYang](https://githu
 [product-screenshot-edit-quote]: img/edit_quote.png
 [product-screenshot-tags]: img/tags.png
 [product-screenshot-edit-tag]: img/edit_tag.png
-[product-screenshot-top-quotes-10]: img/top_quotes_10.png
-[product-screenshot-top-quotes-3]: img/top_quotes_3.png
