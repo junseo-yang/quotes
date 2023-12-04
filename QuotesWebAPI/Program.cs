@@ -7,6 +7,8 @@
 
 using Microsoft.EntityFrameworkCore;
 using QuotesWebAPI.Data;
+using QuotesWebAPI.Extensions;
+using QuotesWebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,12 +20,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Add CORS support, first here as a DI service:
-builder.Services.AddCors(options => {
-    options.AddPolicy("AllowToDoClients", policy => {
-        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-    });
-});
+// Add AuthService
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+builder.Services.AddAuthentication();
+
+// Use our service extensions methods:
+builder.Services.ConfigureCors();
+builder.Services.ConfigureIdentity();
+builder.Services.ConfigureJwtAuthentication(builder.Configuration);
 
 var app = builder.Build();
 
@@ -41,8 +46,9 @@ app.UseStaticFiles();
 app.UseRouting();
 
 // and finally say that we are using CORS here specifying the CORS policy by name:
-app.UseCors("AllowToDoClients");
+app.UseCors("QuotesApiCorsPolicy");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

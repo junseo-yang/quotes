@@ -5,6 +5,7 @@
  *      Junseo Yang, 2023-11-19: Created
  */
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -19,6 +20,7 @@ namespace QuotesWebAPI.Controllers
     /// Class for TagsApiController
     /// </summary>
     [ApiController]
+    [Authorize]
     public class TagsApiController : ControllerBase
     {
         private readonly ApplicationDbContext _context;

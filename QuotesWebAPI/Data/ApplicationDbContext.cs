@@ -5,15 +5,17 @@
  *      Junseo Yang, 2023-11-19: Created
  */
 
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using QuotesWebAPI.Models;
+using QuotesWebAPI.Models.Configuration;
 
 namespace QuotesWebAPI.Data
 {
     /// <summary>
     /// Class for ApplicationDbContext
     /// </summary>
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -22,7 +24,12 @@ namespace QuotesWebAPI.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            // Call base class version to init Identity tables:
             base.OnModelCreating(builder);
+
+            // Apply our custom role configuration:
+            builder.ApplyConfiguration(new RoleConfiguration());
+
             builder.Entity<Quote>().HasData(
                 new Quote
                 {
