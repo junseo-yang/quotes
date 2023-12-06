@@ -22,7 +22,8 @@ def cls():
     os.system('cls' if os.name=='nt' else 'clear')
 
 def load_quotes():
-    # Validate Access Token 
+    # Validate Access Token
+    global access_token
     if access_token == "":
         print()
         print("You should get access token to use the option.")
@@ -35,32 +36,55 @@ def load_quotes():
         'Authorization': 'Bearer ' + access_token,
     }
 
-    json_data_list = []
-    with open(TEXT_FILE) as f:
-        lines = f.readlines() # list containing lines of file
-
-        for line in lines:
-            line = line.strip() # remove leading/trailing white spaces
-            data = [item.strip() for item in line.split(' ~')]
-            json = {}
-            json["description"] = data[0]
-            json["author"] = data[1]
-            json["tags"] = [item for item in data[2].split(', ')]
-
-            json_data_list.append(json)
-
     try:
-        for json in json_data_list:
-            requests.post(url, json=json, headers=headers, verify=False)
+        json_data_list = []
+        with open(TEXT_FILE) as f:
+            lines = f.readlines() # list containing lines of file
 
-        print()
-        print("Quotes have been loaded successfully.")
+            for line in lines:
+                line = line.strip() # remove leading/trailing white spaces
+                data = [item.strip() for item in line.split(' ~')]
+                json = {}
+                json["description"] = data[0]
+                json["author"] = data[1]
+                json["tags"] = [item for item in data[2].split(', ')]
+
+                json_data_list.append(json)
+
+        try:
+            responses = []
+
+            for json in json_data_list:
+                responses.append(requests.post(url, json=json, headers=headers, verify=False))
+
+            success = True
+            error_message = ""
+            for response in responses:
+                if (not response.ok):
+                    if (response.status_code == 401 and success):
+                        error_message += "Error: Unauthorized Token. Re-login to get a new one."
+                    success = False
+
+            print()    
+            if (success):
+                print("Quotes have been loaded successfully.")
+
+                global quotes_loaded
+                quotes_loaded = True
+            else:
+                print("Error: There was a problem loading quotes. Check the API or re-login.")
+                if error_message:
+                    print(error_message)
+        except:
+            print()
+            print("Error: Something went wrong. Check the API Server.")
     except:
-        print()
-        print("Something went wrong. Check the API Server.")
+            print()
+            print("Error: Something went wrong. Check the API Server. Or Check the quotes.txt file")
 
 def display_random_quote():
-    # Validate Access Token 
+    # Validate Access Token
+    global access_token
     if access_token == "":
         print()
         print("You should get access token to use the option.")
@@ -75,22 +99,30 @@ def display_random_quote():
 
     try:
         # Send a get request to get all quotes
-        response = requests.get(url, headers=headers, verify=False).json()
-        quotes = response['quotes']
+        response = requests.get(url, headers=headers, verify=False)
+        if response.ok:
+            quotes = response.json()['quotes']
 
-        # Select a random quote
-        quote = random.choice(quotes)
+            # Select a random quote
+            quote = random.choice(quotes)
 
-        # Print a random quote
-        print()
-        print("A random quote")
-        print(f"'{quote['description']}' by '{quote['author']}' (Likes: {quote['like']})")
+            # Print a random quote
+            print()
+            print("A random quote")
+            print(f"'{quote['description']}' by '{quote['author']}' (Likes: {quote['like']})")
+        elif response.status_code == 401:
+            print()
+            print("Error: Unauthorized Token. Re-login to get a new one.")
+        else:
+            print()
+            print("Error: Something went wrong. Check the API Server.")
     except:
         print()
-        print("Something went wrong. Check the API Server.")
+        print("Error: Something went wrong. Check the API Server.")
 
 def add_new_quote():
     # Validate Access Token
+    global access_token
     if access_token == "":
         print()
         print("You should get access token to use the option.")
@@ -108,30 +140,41 @@ def add_new_quote():
         # Get Available Tags
         print()
         print("Available Tags")
-        response = requests.get(tags_url, headers=headers, verify=False).json()
-        tags = [tag['name'] for tag in response['tags']]
-        print(tags)
+        response = requests.get(tags_url, headers=headers, verify=False)
+        if response.ok:
+            tags = [tag['name'] for tag in response.json()['tags']]
+            print(tags)
 
-        # Get User Input to create quote
-        print()
-        quote_input = input("Enter a quote: ").strip()
-        author_input = input("Enter an author: ").strip()
-        tags_input = [tag for tag in input("Enter tags from Available Tags (Use ', ' for separate. e.g., 'life, happiness'): ").strip().split(", ")]
-        json = {
-            "description": quote_input,
-            "author": author_input,
-            "tags": tags_input}
-        
-        # Post to add a new quote
-        response = requests.post(quotes_url, json=json, headers=headers, verify=False)
-        if (response.ok):
+            # Get User Input to create quote
             print()
-            print("The quote has been created successfully.")
+            quote_input = input("Enter a quote: ").strip()
+            author_input = input("Enter an author: ").strip()
+            tags_input = [tag for tag in input("Enter tags from Available Tags (Use ', ' for separate. e.g., 'life, happiness'): ").strip().split(", ")]
+            json = {
+                "description": quote_input,
+                "author": author_input,
+                "tags": tags_input
+            }
+            
+            # Post to add a new quote
+            response = requests.post(quotes_url, json=json, headers=headers, verify=False)
+            if (response.ok):
+                print()
+                print("The quote has been created successfully.")
+            elif response.status_code == 401:
+                print()
+                print("Error: Unauthorized Token. Re-login to get a new one.")
+            else:
+                raise Exception('Network Error')
+        elif response.status_code == 401:
+            print()
+            print("Error: Unauthorized Token. Re-login to get a new one.")
         else:
-            raise Exception('Network Error')
+            print()
+            print("Error: Something went wrong. Check the API Server. Or enter valid tags.")
     except:
         print()
-        print("Something went wrong. Check the API Server. Or enter valid tags.")
+        print("Error: Something went wrong. Check the API Server. Or enter valid tags.")
 
 def register_user():
     roles_url = 'https://localhost:7223/api/roles'
@@ -228,11 +271,10 @@ def login_user():
         }
 
         resp = requests.post(login_url, headers=headers, json=login_request, verify=False)
-        login_result = resp.json()
 
         if resp.status_code == 200:
             global access_token 
-            access_token = login_result["token"]
+            access_token = resp.json()["token"]
             print()
             print("User logged in successfully.")
         else:
@@ -268,6 +310,7 @@ while True:
     try:
         selection = int(user_input)
     except:
+        print()
         print("Input is not valid. Try Again.")
         continue
     
@@ -284,7 +327,6 @@ while True:
         if quotes_loaded:
             print("Quotes has already been loaded.")
         else:
-            quotes_loaded = True
             load_quotes()
     elif selection == 6:
         print("Thank you. Bye!")
