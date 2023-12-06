@@ -1,4 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿/* AuthService.cs
+ * Class for AuthService
+ * 
+ * Revision History:
+ *      Junseo Yang, 2023-12-10: Created
+ */
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using QuotesWebAPI.Controllers;
@@ -9,6 +15,9 @@ using System.Text;
 
 namespace QuotesWebAPI.Services
 {
+    /// <summary>
+    /// Class for AuthService
+    /// </summary>
     public class AuthService : IAuthService
     {
         private UserManager<User> _userManager;
@@ -16,6 +25,12 @@ namespace QuotesWebAPI.Services
         private IConfiguration _configuration;
         private User? _user;
 
+        /// <summary>
+        /// Constructor for AuthService Class
+        /// </summary>
+        /// <param name="userManager">UserManager</param>
+        /// <param name="roleManager">RoleManager</param>
+        /// <param name="configuration">Configuration</param>
         public AuthService(UserManager<User> userManager,
                             RoleManager<IdentityRole> roleManager,
                             IConfiguration configuration) 
@@ -25,6 +40,11 @@ namespace QuotesWebAPI.Services
             _configuration = configuration;
         }
 
+        /// <summary>
+        /// Method for RegisterUser
+        /// </summary>
+        /// <param name="request">UserRegistrationRequest</param>
+        /// <returns></returns>
         public async Task<IdentityResult> RegisterUser(UserRegistrationRequest request)
         {
             var existingRoles = await _roleManager.Roles.Select(r => r.NormalizedName).ToListAsync();
@@ -64,6 +84,11 @@ namespace QuotesWebAPI.Services
             return result;
         }
 
+        /// <summary>
+        /// Method for LoginUser
+        /// </summary>
+        /// <param name="request">LoginRequest</param>
+        /// <returns></returns>
         public async Task<bool> LoginUser(LoginRequest request)
         {
             _user = await _userManager.FindByNameAsync(request.UserName);
@@ -76,6 +101,10 @@ namespace QuotesWebAPI.Services
             return await _userManager.CheckPasswordAsync(_user, request.Password);
         }
 
+        /// <summary>
+        /// Method for CreateToken
+        /// </summary>
+        /// <returns>JwtToken</returns>
         public async Task<string> CreateToken()
         {
             var signingCredentials = GetSigningCredentials();
@@ -85,6 +114,10 @@ namespace QuotesWebAPI.Services
             return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
         }
 
+        /// <summary>
+        /// Method for GetSigningCredentials
+        /// </summary>
+        /// <returns>SigningCredentials</returns>
         private SigningCredentials GetSigningCredentials()
         {
             var secretKeyText = Environment.GetEnvironmentVariable("SECRET");
@@ -95,12 +128,16 @@ namespace QuotesWebAPI.Services
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
 
+        /// <summary>
+        /// Method for GetClaims
+        /// </summary>
+        /// <returns>List of Claims</returns>
         private async Task<List<Claim>> GetClaims()
         {
             var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.Name, _user.UserName)
-    };
+            {
+                new Claim(ClaimTypes.Name, _user.UserName)
+            };
 
             var roles = await _userManager.GetRolesAsync(_user);
             foreach (var role in roles)
@@ -111,6 +148,12 @@ namespace QuotesWebAPI.Services
             return claims;
         }
 
+        /// <summary>
+        /// Method for GenerateTokenOptions
+        /// </summary>
+        /// <param name="signingCredentials">SigningCredentials</param>
+        /// <param name="claims">List of Claims</param>
+        /// <returns>JwtSecurityToken</returns>
         private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
         {
             var jwtSettings = _configuration.GetSection("JwtSettings");

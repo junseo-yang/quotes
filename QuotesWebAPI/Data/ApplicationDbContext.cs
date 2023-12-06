@@ -3,6 +3,7 @@
  * 
  * Revision History:
  *      Junseo Yang, 2023-11-19: Created
+ *      Junseo Yang, 2023-12-10: Updated
  */
 
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

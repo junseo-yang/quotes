@@ -1,16 +1,30 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿/* AccountApiController.cs
+ * Class for AccountApiController
+ * 
+ * Revision History:
+ *      Junseo Yang, 2023-12-10: Created
+ */
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QuotesWebAPI.Services;
 
 namespace QuotesWebAPI.Controllers
 {
+    /// <summary>
+    /// Class for AccountApiController
+    /// </summary>
     [ApiController()]
     public class AccountApiController : Controller
     {
         private RoleManager<IdentityRole> _roleManager;
         private IAuthService _authService;
 
+        /// <summary>
+        /// Constructor for AccountApiController
+        /// </summary>
+        /// <param name="roleManager">RoleManager</param>
+        /// <param name="authService">AuthService</param>
         public AccountApiController(RoleManager<IdentityRole> roleManager,
                                     IAuthService authService)
         {
@@ -18,6 +32,11 @@ namespace QuotesWebAPI.Controllers
             _authService = authService;
         }
 
+        /// <summary>
+        /// Method for RegisterUser
+        /// </summary>
+        /// <param name="request">UserRegistrationRequest</param>
+        /// <returns>IActionResult</returns>
         [HttpPost("/api/register")]
         public async Task<IActionResult> RegisterUser(UserRegistrationRequest request)
         {
@@ -38,6 +57,11 @@ namespace QuotesWebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Method for LoginUser
+        /// </summary>
+        /// <param name="request">LoginRequest</param>
+        /// <returns>IActionResult</returns>
         [HttpPost("/api/login")]
         public async Task<IActionResult> LoginUser(LoginRequest request)
         {
@@ -51,6 +75,10 @@ namespace QuotesWebAPI.Controllers
             return Unauthorized();
         }
 
+        /// <summary>
+        /// Method for GetRoles
+        /// </summary>
+        /// <returns>IActionResult</returns>
         [HttpGet("/api/roles")]
         public async Task<IActionResult> GetRoles()
         {

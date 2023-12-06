@@ -1,7 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿/* UserRegistrationRequest.cs
+ * Class for UserRegistrationRequest
+ * 
+ * Revision History:
+ *      Junseo Yang, 2023-12-10: Created
+ */
+using System.ComponentModel.DataAnnotations;
 
 namespace QuotesWebAPI.Controllers
 {
+    /// <summary>
+    /// Class for UserRegistrationRequest
+    /// </summary>
     public class UserRegistrationRequest
     {
         public string? FirstName { get; set; }

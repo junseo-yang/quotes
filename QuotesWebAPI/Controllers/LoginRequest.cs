@@ -1,7 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿/* LoginRequest.cs
+ * Class for LoginRequest
+ * 
+ * Revision History:
+ *      Junseo Yang, 2023-12-10: Created
+ */
+
+using System.ComponentModel.DataAnnotations;
 
 namespace QuotesWebAPI.Controllers
 {
+    /// <summary>
+    /// Class for LoginRequest
+    /// </summary>
     public class LoginRequest
     {
         [Required(ErrorMessage = "Username is required")]

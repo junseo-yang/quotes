@@ -1,4 +1,10 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿/* ServiceExtensions.cs
+ * Class for ServiceExtensions
+ * 
+ * Revision History:
+ *      Junseo Yang, 2023-12-10: Created
+ */
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using QuotesWebAPI.Data;
@@ -7,8 +13,15 @@ using System.Text;
 
 namespace QuotesWebAPI.Extensions
 {
+    /// <summary>
+    /// Static Class for ServiceExtensions
+    /// </summary>
     public static class ServiceExtensions
     {
+        /// <summary>
+        /// Static Method for ConfigureCors
+        /// </summary>
+        /// <param name="services">IServiceCollection</param>
         public static void ConfigureCors(this IServiceCollection services)
         {
             services.AddCors(options =>
@@ -23,6 +36,10 @@ namespace QuotesWebAPI.Extensions
             });
         }
 
+        /// <summary>
+        /// Static Method for ConfigureIdentity
+        /// </summary>
+        /// <param name="services">IServiceCollection</param>
         public static void ConfigureIdentity(this IServiceCollection services)
         {
             var builder = services.AddIdentity<User, IdentityRole>(o =>
@@ -38,6 +55,11 @@ namespace QuotesWebAPI.Extensions
             .AddDefaultTokenProviders();
         }
 
+        /// <summary>
+        /// Static Method for ConfigureJwtAuthentication
+        /// </summary>
+        /// <param name="services">IServiceCollection</param>
+        /// <param name="configuration">IConfiguration</param>
         public static void ConfigureJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             var jwtSettings = configuration.GetSection("JwtSettings");
