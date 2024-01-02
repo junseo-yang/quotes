@@ -20,7 +20,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/junseo-yang/PROG3170_JunseoYang">
+  <a href="https://github.com/junseo-yang/quotes">
     <img src="img/logo.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -29,14 +29,14 @@
   <p align="center">
     A Quotes App with Tags
     <br />
-    <a href="https://github.com/junseo-yang/PROG3170_JunseoYang"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/junseo-yang/quotes"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/junseo-yang/PROG3170_JunseoYang">View Demo</a>
+    <a href="https://github.com/junseo-yang/quotes">View Demo</a>
     ·
-    <a href="https://github.com/junseo-yang/PROG3170_JunseoYang/issues">Report Bug</a>
+    <a href="https://github.com/junseo-yang/quotes/issues">Report Bug</a>
     ·
-    <a href="https://github.com/junseo-yang/PROG3170_JunseoYang/issues">Request Feature</a>
+    <a href="https://github.com/junseo-yang/quotes/issues">Request Feature</a>
   </p>
 </div>
 
@@ -72,23 +72,24 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+- QuotesWebAPI Project with ASP .NET Core
+- QuotesWebSPAClient with Vanilla JavaScript
+- QuotesPythonClient with Python
+- Authorization and Authentication with **OAuth2**
+- Quotes and Tags Feature
+- Search by Tag
+- Get Top # of Quotes
+[![Product Screen Shot Demo][product-screenshot-demo]](https://github.com/junseo-yang/quotes)
+
 ### Quotes
-[![Product Screen Shot Quotes][product-screenshot-quotes]](https://github.com/junseo-yang/PROG3170_JunseoYang)
-[![Product Screen Shot Edit Quote][product-screenshot-edit-quote]](https://github.com/junseo-yang/PROG3170_JunseoYang)
+[![Product Screen Shot Quotes][product-screenshot-quotes]](https://github.com/junseo-yang/quotes)
+[![Product Screen Shot Edit Quote][product-screenshot-edit-quote]](https://github.com/junseo-yang/quotes)
 
 ### Tags
-[![Product Screen Shot Tags][product-screenshot-tags]](https://github.com/junseo-yang/PROG3170_JunseoYang)
-[![Product Screen Shot Edit Tag][product-screenshot-edit-tag]](https://github.com/junseo-yang/PROG3170_JunseoYang)
-
-### Top Quotes
-[![Product Screen Shot Top 10 Quotes][product-screenshot-top-quotes-10]](https://github.com/junseo-yang/PROG3170_JunseoYang)
-[![Product Screen Shot Top 3 Quotes][product-screenshot-top-quotes-3]](https://github.com/junseo-yang/PROG3170_JunseoYang)
-
-### Description
-You can GetAll/Create/Update Quotes, Tags, and Top Quotes
+[![Product Screen Shot Tags][product-screenshot-tags]](https://github.com/junseo-yang/quotes)
+[![Product Screen Shot Edit Tag][product-screenshot-edit-tag]](https://github.com/junseo-yang/quotes)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 ### Built With
@@ -136,7 +137,7 @@ This is an example of how to list things you need to use the software and how to
 
 1. Clone the repo
     ```sh
-    git clone https://github.com/junseo-yang/PROG3170_JunseoYang.git
+    git clone https://github.com/junseo-yang/quotes.git
     ```
 2. Run API
     1. Open QuotesWebAPI project with Visual Studio
@@ -171,7 +172,7 @@ This is an example of how to list things you need to use the software and how to
 - [x] Add Quote
 - [x] Edit Quote
 
-See the [open issues](https://github.com/junseo-yang/PROG3170_JunseoYang/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/junseo-yang/quotes/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -212,7 +213,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 - :school_satchel: Website: https://junseo-yang.github.io
 - :mailbox: jsy724724@gmail.com
 
-Project Link: [https://github.com/junseo-yang/PROG3170_JunseoYang](https://github.com/junseo-yang/PROG3170_JunseoYang)
+Project Link: [https://github.com/junseo-yang/quotes](https://github.com/junseo-yang/quotes)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -235,15 +236,15 @@ Project Link: [https://github.com/junseo-yang/PROG3170_JunseoYang](https://githu
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
-[contributors-url]: https://github.com/junseo-yang/PROG3170_JunseoYang/graphs/contributors
+[contributors-url]: https://github.com/junseo-yang/quotes/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
-[forks-url]: https://github.com/junseo-yang/PROG3170_JunseoYang/network/members
+[forks-url]: https://github.com/junseo-yang/quotes/network/members
 [stars-shield]: https://img.shields.io/github/stars/github_username/repo_name.svg?style=for-the-badge
-[stars-url]: https://github.com/junseo-yang/PROG3170_JunseoYang/stargazers
+[stars-url]: https://github.com/junseo-yang/quotes/stargazers
 [issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
-[issues-url]: https://github.com/junseo-yang/PROG3170_JunseoYang/issues
+[issues-url]: https://github.com/junseo-yang/quotes/issues
 [license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
-[license-url]: https://github.com/junseo-yang/PROG3170_JunseoYang/blob/master/LICENSE.txt
+[license-url]: https://github.com/junseo-yang/quotes/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/junseo-yang
 [Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
@@ -260,6 +261,7 @@ Project Link: [https://github.com/junseo-yang/PROG3170_JunseoYang](https://githu
 [C#-url]: https://learn.microsoft.com/en-us/aspnet/core/mvc/overview?view=aspnetcore-8.0
 [Python]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
 [Python-url]: https://www.python.org/
+[product-screenshot-demo]: img/demo.gif
 [product-screenshot-quotes]: img/quotes.png
 [product-screenshot-edit-quote]: img/edit_quote.png
 [product-screenshot-tags]: img/tags.png
